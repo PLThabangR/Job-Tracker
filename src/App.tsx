@@ -6,11 +6,11 @@ import Home from './pages/home/Home'
 import LandingPage from './pages/landingPage/LandingPage'
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
     <>
-      <div className='container' >
+      <div className='container'>
         <Home/>
         <LandingPage/>
        </div>

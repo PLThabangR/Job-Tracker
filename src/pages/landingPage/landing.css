@@ -1,5 +1,61 @@
 
 
+.header{
+    /* Set the background for the image */
+    background: url("");
+    background-position: buttom;
+    background-size: cover;
+    height: 100vh;
+    font-family: 'Playfair Display', serif;
+
+    /* Put heading in the center of the page */
+    /* Using flex */
+    
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    /* Set the position of the heading */
+    position: relative;
+
+}
+
+.main-heading{
+    /* Distance from the top of his parent */
+    position: absolute;
+    top:7rem;
+    font-size: 4rem;
+    word-spacing: 10px;    
+   
+}
+
+
+.primary-heading{
+    position: absolute;
+    bottom: 6rem;
+    font-size: 4rem;
+    word-spacing: 10px;
+     margin-bottom: -40px;
+      
+}
+
+.landing-btn{
+     padding: 10px 20px;
+    border-radius: 5px;
+    border: 0px;
+      font-weight: bold;
+    cursor: pointer;
+    background-color:#deab5f;
+    color:#312e2e;
+}
+.btn-container{
+    display:flex;
+    margin:10px;
+    gap:10px;
+}
+
 @media (max-width: 575.98px) {
     
 }
