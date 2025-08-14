@@ -12,7 +12,7 @@ interface Job {
 const JobForm = () => {
   //Hooks
 //import from zustand
-  const {addJob, jobs} = useJobs();
+  const { jobs} = useJobs();
 
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
@@ -24,12 +24,13 @@ const JobForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     //Prevent page reload
     e.preventDefault();
+    console.log(role, companyName, date, jobStatus, extraDetails)
     //Create new job object
     const newJob = { 
-      //
-      id: jobs.length + 1, companyName, role, date, jobStatus, extraDetails };
-      //Add new job object to the array
-      addJob(newJob);
+        id: jobs.length + 1, companyName, role, date, jobStatus, extraDetails };
+
+      //Add new job object to the zustand function
+     // addJob(newJob);
     //set to empty
     setCompanyName('');
     setRole('');

@@ -7,6 +7,14 @@ interface JobCardProps {
   jobStatus: string;
   extraDetails: string; 
 }
+
+const handleDelete = (id: number) => {
+
+}
+
+const handleUpdate = (id: number) => {
+  
+}
 const JobCard = ({companyName, role, date, jobStatus, extraDetails}: JobCardProps) => {
   return (
     <>
