@@ -1,32 +1,75 @@
+import { useState } from 'react';
 import './form.css'
-
+import { useJobs } from '../../globalState/store';
+interface Job {
+  id: number;
+  companyName: string;
+  role: string;
+  date: string;
+  jobStatus: string;
+  extraDetails: string;
+}
 const JobForm = () => {
+  //Hooks
+//import from zustand
+  const {addJob, jobs} = useJobs();
+
+  const [companyName, setCompanyName] = useState('');
+  const [role, setRole] = useState('');
+  const [date, setDate] = useState('');
+  const [jobStatus, setJobStatus] = useState('');
+  const [extraDetails, setExtraDetails] = useState('');
+
+  //Handle submit
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    //Prevent page reload
+    e.preventDefault();
+    //Create new job object
+    const newJob = { 
+      //
+      id: jobs.length + 1, companyName, role, date, jobStatus, extraDetails };
+      //Add new job object to the array
+      addJob(newJob);
+    //set to empty
+    setCompanyName('');
+    setRole('');
+    setDate('');
+    setJobStatus('');
+    setExtraDetails('');
+    console.log(jobs)
+  }
   return (
     <>
 
-<form>
+<form  onSubmit={handleSubmit}>
   <div className="mb-3">
-    <label htmlFor="jobName" className="form-label">Job name</label>
-    <input type="email" className="form-control" id="jobName" aria-describedby="emailHelp"/>
+    <label htmlFor="companyName" className="form-label">Company name</label>
+    <input type="text" className="form-control" id="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
 
   </div>
   <div className="mb-3">
-    <label htmlFor="jobDescription" className="form-label">Password</label>
-    <input type="password" className="form-control" id="jobDescription"/>
+    <label htmlFor="role" className="form-label">Role</label>
+    <input type="text" className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)} />
   </div>
 
   <div className="mb-3">
     <label htmlFor="date" className="form-label">Posted date</label>
-    <input type="date" className="form-control" id="date"/>
+    <input type="date" className="form-control" id="date" value={date} onChange={(e) => setDate(e.target.value)}/>
   </div>
   <div className="mb-3">
     <label htmlFor="jobStatus" className="form-label">Status</label>
-    <input type="text" className="form-control" id="jobStatus"/>
+    <input type="text" className="form-control" id="jobStatus" value={jobStatus} onChange={(e) => setJobStatus(e.target.value)}/>
+  </div>
+
+   <div className="mb-3">
+    <label htmlFor="extraDetails" className="form-label">Extra Details</label>
+    <input type="text" className="form-control" id="extraDetails" value={extraDetails} onChange={(e) => setExtraDetails(e.target.value)}/>
   </div>
 
   <button type="submit" className="btn btn-primary">Post job</button>
 </form>
 
+    
     </>
   )
 }

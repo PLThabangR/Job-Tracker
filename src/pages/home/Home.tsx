@@ -1,10 +1,12 @@
-import React from 'react'
+
 import './home.css';
 import Navbar from '../Navbar/Navbar';
 import JobCard from '../../components/JobCard';
 import JobForm from '../form/JobForm';
 
 const Home = () => {
+
+  
   return (
     <>
     
