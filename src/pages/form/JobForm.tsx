@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './form.css'
 import { useJobs } from '../../globalState/store';
+import toast from 'react-hot-toast';
+
 interface Job {
   id: number;
   companyName: string;
@@ -12,7 +14,7 @@ interface Job {
 const JobForm = () => {
   //Hooks
 //import from zustand
-  const { jobs} = useJobs();
+  const { jobs,createJob} = useJobs();
 
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
@@ -21,9 +23,10 @@ const JobForm = () => {
   const [extraDetails, setExtraDetails] = useState('');
 
   //Handle submit
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     //Prevent page reload
     e.preventDefault();
+    
     console.log(role, companyName, date, jobStatus, extraDetails)
     //Create new job object
     const newJob = { 
@@ -31,6 +34,13 @@ const JobForm = () => {
 
       //Add new job object to the zustand function
      // addJob(newJob);
+     const {success, message} = await createJob(newJob);
+
+     if(success){
+      toast.success(message);
+     }else{
+      toast.error(message);
+     }
     //set to empty
     setCompanyName('');
     setRole('');
