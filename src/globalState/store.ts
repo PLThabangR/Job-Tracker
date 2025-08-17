@@ -59,7 +59,9 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
   //get all jobs function
   ,getAllJobs: async () => {
 
-    const response = await fetch('http://localhost:8000/jobs',{
+  
+
+     const response = await fetch('http://localhost:8000/jobs',{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -67,8 +69,12 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
       //Parse the response to json 
        const data = await response.json();
       //we do not use set ... because we are not updating the state
-    set({jobs: data.jobs});
+    set({jobs: data});
+      console.log("This is returned after get",data)
+       return {success: true, message: 'Jobs fetched successfully'};
+   
   }
+
 
   //end of getAllJobs
 

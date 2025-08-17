@@ -18,7 +18,7 @@ const handleUpdate = (id: number) => {
 const JobCard = ({companyName, role, date, jobStatus, extraDetails}: JobCardProps) => {
   return (
     <>
-    <div className="card" style={{width:' 18rem', marginTop:'10px'}}>
+    <div className="card" style={{width:' 20rem', marginTop:'10px',marginBottom:'10px'}}>
   
   <div className="card-body">
     <h5 className="card-title">{companyName}</h5>\
@@ -28,7 +28,7 @@ const JobCard = ({companyName, role, date, jobStatus, extraDetails}: JobCardProp
     <p className="card-text">{jobStatus}</p>
     <a href="#" className="btn btn-primary">Update</a>
 
-    <a href="#" className="btn btn-primary" >Delete</a>
+    <a href="#" className="btn btn-danger" >Delete</a>
 
   </div>
 </div>

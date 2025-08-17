@@ -6,7 +6,7 @@ import JobForm from '../form/JobForm';
 import { useJobs } from '../../globalState/store';
 import { useEffect } from 'react';
 
-interface Job {
+interface JobInterface {
   id: number;
   companyName: string;
   role: string;
@@ -21,14 +21,22 @@ const Home = () => {
   //load function using use effect
   useEffect(() => {
     //Call the get all jobs function
-    getAllJobs();
+ getAllJobs();
   }, [getAllJobs])//dependency array the useffect will only run if the getAllJobs is called
 
   //Maping jobs to card using this functon
-  const DisplayJobs=()=>{
-    jobs.map((job)=>(
-      <JobCard key={job.id} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
-    ))
+  const DisplayJobs=() :any=>{
+    if(jobs) {//check if jobs exist
+      return ( //if jobs exits return this error
+        jobs.map((job) => (
+          job ? (
+            <JobCard key={job.id} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
+          ) : null //reutrn null of the is a error with keys
+        ))
+      );
+    } else {
+      return null;//if jobs does not exist return null
+    }
   }
   return (
     <>
@@ -36,8 +44,10 @@ const Home = () => {
 <Navbar/>
    
     
+    <div className="no-job"  style={{display:'flex',justifyContent:'center',flexWrap:'wrap',flexDirection:'row',alignItems:'center'}}>
+  { jobs.length>0 ? <DisplayJobs/>:<h1 className='no-job'>No Jobs available</h1>} 
+    </div>
 
-  { jobs.length>0 ? {}:<h1 className='no-job'>No Jobs available</h1>} 
     
     <JobForm/>
     </>
