@@ -1,7 +1,7 @@
 {
   "jobs": [
     {
-      "id": 1,
+      "id": "1",
       "companyName": "ioco",
       "role": "Frontend",
       "date": "2025-08-11",
@@ -9,7 +9,7 @@
       "extraDetails": "Software update"
     },
     {
-      "id": 2,
+      "id": "2",
       "companyName": "BBD",
       "role": "developer",
       "date": "2025-03-12",
@@ -17,12 +17,20 @@
       "extraDetails": "Working with various tech stack"
     },
     {
-      "id": 3,
+      "id": "3",
       "companyName": "Plumblink SA ",
       "role": "Picker",
       "date": "2025-05-19",
       "jobStatus": "Success",
       "extraDetails": "Picking "
+    },
+    {
+      "id": 1,
+      "companyName": "Adapt it",
+      "role": "Project manager",
+      "date": "2025-05-20",
+      "jobStatus": "Pending",
+      "extraDetails": "Monitoring and management"
     }
   ]
 }
