@@ -73,9 +73,33 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
       console.log("This is returned after get",data)
        return {success: true, message: 'Jobs fetched successfully'};
    
-  }
-
-
+  },
   //end of getAllJobs
+  //Start of Delete job function
+
+  deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
+      
+   try{
+     //Make a delete request to the backend to delete job
+     const response = await fetch(`http://localhost:8000/jobs/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if(!response.ok){
+      throw new Error("Failed to delete job");
+    }
+    //Update the state
+    //Use filter to remove the job with the same id and set the state
+    set((state) => ({ jobs: state.jobs.filter((job) => job.id !== id) }));
+    //Return the data
+    return {success: true, message: "Job deleted successful"};
+   }catch(err){
+    //Return this to user if something goes wrong
+      return {success: false, message: "Job not deleted "};
+   }
+  }//End of deleteJob function
 
 }))

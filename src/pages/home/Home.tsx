@@ -26,11 +26,11 @@ const Home = () => {
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
-    if(jobs) {//check if jobs exist
+    if(jobs) {//check if jobs array has values
       return ( //if jobs exits return this error
-        jobs.map((job) => (
+        jobs.map((job: JobInterface) => (
           job ? (
-            <JobCard key={job.id} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
+            <JobCard key={job.id} id={job.id} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
           ) : null //reutrn null of the is a error with keys
         ))
       );
@@ -44,8 +44,8 @@ const Home = () => {
 <Navbar/>
    
     
-    <div className="no-job"  style={{display:'flex',justifyContent:'center',flexWrap:'wrap',flexDirection:'row',alignItems:'center'}}>
-  { jobs.length>0 ? <DisplayJobs/>:<h1 className='no-job'>No Jobs available</h1>} 
+    <div className="card-container"  >
+  { jobs.length>0 ? <DisplayJobs/>:<h1 className='no-jobs-header'>No Jobs available</h1>} ection:'row',alignItems:'center'
     </div>
 
     

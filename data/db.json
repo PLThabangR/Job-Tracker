@@ -1,31 +1,7 @@
 {
   "jobs": [
     {
-      "id": "1",
-      "companyName": "ioco",
-      "role": "Frontend",
-      "date": "2025-08-11",
-      "jobStatus": "Pending",
-      "extraDetails": "Software update"
-    },
-    {
-      "id": "2",
-      "companyName": "BBD",
-      "role": "developer",
-      "date": "2025-03-12",
-      "jobStatus": "Pending",
-      "extraDetails": "Working with various tech stack"
-    },
-    {
-      "id": "3",
-      "companyName": "Plumblink SA ",
-      "role": "Picker",
-      "date": "2025-05-19",
-      "jobStatus": "Success",
-      "extraDetails": "Picking "
-    },
-    {
-      "id": 5,
+      "id": "4",
       "companyName": "Plumblink SA | Johannesburg",
       "role": "Manager",
       "date": "2025-08-28",
@@ -33,7 +9,7 @@
       "extraDetails": "Working in logistics"
     },
     {
-      "id": 5,
+      "id": "5",
       "companyName": "Absa",
       "role": "Developer",
       "date": "2025-08-04",
@@ -41,7 +17,7 @@
       "extraDetails": "Working with various tech stack"
     },
     {
-      "id": 6,
+      "id": "6",
       "companyName": "Adapt it",
       "role": "Frontend",
       "date": "2025-08-22",
@@ -49,7 +25,7 @@
       "extraDetails": "Working with various tech stack"
     },
     {
-      "id": 7,
+      "id": "7",
       "companyName": "ioco",
       "role": "software",
       "date": "2025-08-29",
