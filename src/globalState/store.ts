@@ -102,4 +102,45 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
    }
   }//End of deleteJob function
 
+  //update job start here
+  ,updateJobStore: async (id: number,updatedJob: Job): Promise<{success: boolean, message: string}> => {
+      console.log(updatedJob)
+      console.log(id)
+    if(!updatedJob.companyName || !updatedJob.role || !updatedJob.date || !updatedJob.jobStatus || !updatedJob.extraDetails){
+        return {success: false, message: 'All fields are required'};
+    }
+    if(!updatedJob.companyName.trim() && updatedJob.companyName.length<2){
+      return {success: false, message: 'Company name is too short'};
+    }
+    if(!updatedJob.role.trim() && updatedJob.role.length<2){
+      return {success: false, message: 'Role is too short'};
+    }
+    if(!updatedJob.extraDetails.trim() && updatedJob.extraDetails.length<3){
+      return {success: false, message: 'Extra details is too short'};
+    }
+   try{
+     //Make a put request to the backend to update job
+     const response = await fetch(`http://localhost:8000/jobs/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      //Send the updated job object as a string
+      body: JSON.stringify(updatedJob),
+    });
+    //if the response is not ok throw error
+    if(!response.ok){
+      throw new Error("Failed to update job");
+    }
+    //Update the state
+    //Use map to update the job with the same id and set the state
+    set((state) => ({ jobs: state.jobs.map((job) => job.id === id ? updatedJob : job) }));
+    //Return the data
+    return {success: true, message: "Job updated successful"};
+   }catch(err){
+    //Return this to user if something goes wrong
+      return {success: false, message: "Job not updated "};
+   }
+  }//end of updateJob
+
 }))

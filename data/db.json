@@ -1,36 +1,28 @@
 {
   "jobs": [
     {
-      "id": "4",
+      "id": "5",
+      "companyName": "BBD",
+      "role": "Bu",
+      "date": "2025-08-01",
+      "jobStatus": "Pending",
+      "extraDetails": "buying "
+    },
+    {
+      "id": 2,
+      "companyName": "Mzali",
+      "role": "software",
+      "date": "2025-08-06",
+      "jobStatus": "Pending",
+      "extraDetails": "works"
+    },
+    {
+      "id": 3,
       "companyName": "Plumblink SA | Johannesburg",
       "role": "Manager",
-      "date": "2025-08-28",
+      "date": "2025-08-01",
       "jobStatus": "Pending",
-      "extraDetails": "Working in logistics"
-    },
-    {
-      "id": "5",
-      "companyName": "Absa",
-      "role": "Developer",
-      "date": "2025-08-04",
-      "jobStatus": "Success",
-      "extraDetails": "Working with various tech stack"
-    },
-    {
-      "id": "6",
-      "companyName": "Adapt it",
-      "role": "Frontend",
-      "date": "2025-08-22",
-      "jobStatus": "Pending",
-      "extraDetails": "Working with various tech stack"
-    },
-    {
-      "id": "7",
-      "companyName": "ioco",
-      "role": "software",
-      "date": "2025-08-29",
-      "jobStatus": "Success",
-      "extraDetails": "jbjb"
+      "extraDetails": "works"
     }
   ]
 }

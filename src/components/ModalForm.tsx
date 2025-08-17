@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useJobs } from '../globalState/store';
 
 interface JobModalProps {
   id: number;
@@ -11,47 +13,62 @@ interface JobModalProps {
 
 const ModalForm = ({id,companyName, role, date, jobStatus, extraDetails}: JobModalProps) => {
 
-    const handleU
+    const [updateJob,setUpdateJob] = useState<JobModalProps>({id,companyName, role, date, jobStatus, extraDetails}); 
+
+    const {updateJobStore} = useJobs();
+    const handleUpdate =async (id: number,updatedJob: JobModalProps) => {
+      const {success, message} =  await updateJobStore(id,updatedJob);
+
+      if(success){
+        toast.success(message);
+       
+      }else{
+        toast.error(message);
+        //clear state if the is error occored
+        setUpdateJob({id,companyName:"", role:"", date:"", jobStatus:"", extraDetails:""});
+      }
+
+    }
   return (
     <div >
      <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
-        <h5 className="modal-title">Modal title</h5>
+        <h5 className="modal-title" style={{textAlign:'center'}}>Update job informaton</h5>
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body">
-       <form  onSubmit={handleUpdat}>
+       <form>
   <div className="mb-3">
     <label htmlFor="companyName" className="form-label">Company name</label>
-    <input type="text" className="form-control" id="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
+    <input type="text" className="form-control" id="companyName" value={updateJob.companyName} onChange={(e) => setUpdateJob({...updateJob, companyName: e.target.value})}/>
 
   </div>
   <div className="mb-3">
     <label htmlFor="role" className="form-label">Role</label>
-    <input type="text" className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)} />
+    <input type="text" className="form-control" id="role" value={updateJob.role} onChange={(e) => setUpdateJob({...updateJob, role: e.target.value})} />
   </div>
 
   <div className="mb-3">
     <label htmlFor="date" className="form-label">Posted date</label>
-    <input type="date" className="form-control" id="date" value={date} onChange={(e) => setDate(e.target.value)}/>
+    <input type="date" className="form-control" id="date" value={updateJob.date} onChange={(e) => setUpdateJob({...updateJob, date: e.target.value})}/>
   </div>
   <div className="mb-3">
     <label htmlFor="jobStatus" className="form-label">Status</label>
-    <input type="text" className="form-control" id="jobStatus" value={jobStatus} onChange={(e) => setJobStatus(e.target.value)}/>
+    <input type="text" className="form-control" id="jobStatus" value={updateJob.jobStatus} onChange={(e) => setUpdateJob({...updateJob, jobStatus: e.target.value})}/>
   </div>
 
    <div className="mb-3">
     <label htmlFor="extraDetails" className="form-label">Extra Details</label>
-    <input type="text" className="form-control" id="extraDetails" value={extraDetails} onChange={(e) => setExtraDetails(e.target.value)}/>
+    <input type="text" className="form-control" id="extraDetails" value={updateJob.extraDetails} onChange={(e) => setUpdateJob({...updateJob, extraDetails: e.target.value})}/>
   </div>
 
-  <button type="submit" className="btn btn-primary">Post job</button>
 </form>
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
+        {/* this button open and closes the modal */}
+        <button type="button" className="btn btn-primary" onClick={() => handleUpdate(id,updateJob)} data-bs-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>

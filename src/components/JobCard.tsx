@@ -58,8 +58,9 @@ const handleUpdate = (id: number) => {
 </div>
     {/* modal */}
     {/* modal start */}
-    <div className="modal"  id="updateFormModel" tabindex="-1">
-      <ModalForm/>
+    <div className="modal"  id="updateFormModel">
+      {/* modal content pass props */}
+      <ModalForm id={id} companyName={companyName} role={role} date={date} jobStatus={jobStatus} extraDetails={extraDetails}/>
     </div>
        
     </>

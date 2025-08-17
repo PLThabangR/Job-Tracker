@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     //Call the get all jobs function
  getAllJobs();
-  }, [getAllJobs])//dependency array the useffect will only run if the getAllJobs is called
+  }, [jobs.length])//dependency array the useffect will only run if the length changes
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
