@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import { useJobs } from '../globalState/store';
 import './JobCard.css'
+import ModalForm from './ModalForm';
 
 interface JobCardProps {
   id: number;
@@ -30,8 +31,13 @@ const JobCard = ({id,companyName, role, date, jobStatus, extraDetails}: JobCardP
    
 }
 
+//creating the modal state
+
+
 const handleUpdate = (id: number) => {
   
+
+
 }
   return (
     <>
@@ -44,13 +50,18 @@ const handleUpdate = (id: number) => {
     <p className="card-text">{extraDetails}.</p>
     <p className="card-text">{date}</p>
     <p className="card-text">{jobStatus}</p>
-    <a href="#" className="btn btn-primary">Update</a>
+    <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateFormModel">Update</a>
 
     <a href="#" className="btn btn-danger"  onClick={() => handleDelete(id)}>Delete</a>
-
+      {/* modal */}
   </div>
 </div>
-    
+    {/* modal */}
+    {/* modal start */}
+    <div className="modal"  id="updateFormModel" tabindex="-1">
+      <ModalForm/>
+    </div>
+       
     </>
   )
 }
