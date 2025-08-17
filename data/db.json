@@ -1,28 +1,18 @@
 {
-  "jobs": [
+  "users": [
     {
-      "id": "5",
-      "companyName": "BBD",
-      "role": "Bu",
-      "date": "2025-08-01",
-      "jobStatus": "Pending",
-      "extraDetails": "buying "
+      "id": 1,
+      "name": "thabang",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "12345"
     },
+   
     {
-      "id": 2,
-      "companyName": "Mzali",
-      "role": "software",
-      "date": "2025-08-06",
-      "jobStatus": "Pending",
-      "extraDetails": "works"
-    },
-    {
-      "id": 3,
-      "companyName": "Plumblink SA | Johannesburg",
-      "role": "Manager",
-      "date": "2025-08-01",
-      "jobStatus": "Pending",
-      "extraDetails": "works"
+      "id": 445,
+      "name": "khomotso",
+      "email": "khomotso@gmail.com",
+      "password": "12345"
     }
-  ]
+  ],
+  "jobs": []
 }

@@ -27,10 +27,10 @@ const JobForm = () => {
     //Prevent page reload
     e.preventDefault();
     
-    console.log(role, companyName, date, jobStatus, extraDetails)
-    //Create new job object
+    
+    //Create new job object by using keys and removing white spaces
     const newJob = { 
-        id: jobs.length + 1, companyName, role, date, jobStatus, extraDetails };
+        id: Math.floor(Math.random() * 1000), companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
 
       //Add new job object to the zustand function
      // addJob(newJob);
