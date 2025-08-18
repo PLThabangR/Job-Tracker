@@ -141,6 +141,8 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
     //Return this to user if something goes wrong
       return {success: false, message: "Job not updated "};
    }
-  }//end of updateJob
+  },//end of updateJob
+// Set the state of job to the filtered jobs this will render
+  searchByCompanyName : (searchTerm: string) => set((state) => ({jobs: state.jobs.filter((job) => job.companyName.toLowerCase().includes(searchTerm.toLowerCase()))})),
 
 }))

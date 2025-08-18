@@ -1,5 +1,6 @@
 
 //Importing the create function from zutand
+
 import {create} from 'zustand'
 
 interface User {
@@ -57,6 +58,14 @@ export const useUsers = create<UsersState>((set) => ({//set is a special name al
     //Parse the response to json
     const data = await response.json();
 
+      //check if email and password are correct
+        //check if email and password are correct using the find method to search 
+    // const user =data.find((user: User) => user.email === newUser.email);
+    //  console.log("email already exists",user )
+    // if (user) {
+    //   return {success: false, message: 'Email already exists'};
+    // }
+
     //Update the state
     set((state) => ({ users: [...state.users, data.users] }))
     //Return the data
@@ -64,6 +73,7 @@ export const useUsers = create<UsersState>((set) => ({//set is a special name al
 
    }catch(err){
     //Return this to user if somethi
+    console.log(err)
       return {success: false, message: "User not created "};
    }
   },//end of createJob
@@ -82,16 +92,18 @@ export const useUsers = create<UsersState>((set) => ({//set is a special name al
       //we do not use set ... because we are not updating the state
     set({users: data});
        
-    console.log("This is returned after get",data)
+    
    
     //check if email and password are correct
         //check if email and password are correct using the find method to search 
     const user =data.find((user: User) => user.email === email && user.password === password);
-    console.log("User found ",user)
+    
     if (!user) {
       return {success: false, message: 'Invalid email or password'};
     }
 
+ 
+    //Return the data 
     return {success: true, message: 'Login successful'};
       
     } catch (error) {

@@ -1,18 +1,88 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "thabang",
       "email": "rakgoropothabang@gmail.com",
       "password": "12345"
     },
-   
     {
-      "id": 445,
+      "id": "445",
       "name": "khomotso",
       "email": "khomotso@gmail.com",
       "password": "12345"
+    },
+    {
+      "id": "362",
+      "name": "khomotso",
+      "email": "khomotso@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "633",
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "55555"
+    },
+    {
+      "id": "845",
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "55555eeee"
+    },
+    {
+      "id": "864",
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "454654645"
+    },
+    {
+      "id": 604,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": 419,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "121323"
+    },
+    {
+      "id": 695,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "3242342"
+    },
+    {
+      "id": 146,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": 146,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "12345"
     }
   ],
-  "jobs": []
+  "jobs": [
+    {
+      "id": 187,
+      "companyName": "Mzali",
+      "role": "software",
+      "date": "2025-08-31",
+      "jobStatus": "Success",
+      "extraDetails": "works"
+    },
+    {
+      "id": 436,
+      "companyName": "BBD",
+      "role": "sales",
+      "date": "2025-08-08",
+      "jobStatus": "Success",
+      "extraDetails": "Working with various tech stack"
+    }
+  ]
 }

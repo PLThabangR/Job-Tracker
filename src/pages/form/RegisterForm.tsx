@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useUsers } from '../../globalState/usersStore';
 import toast from 'react-hot-toast';
+import {  useNavigate } from 'react-router-dom';
 
 interface UserRegisterForm{
   id: number;
@@ -12,6 +13,8 @@ interface UserRegisterForm{
 
 
 const RegisterForm = () => {
+  //Hooks and states
+  const Navigate = useNavigate();
  const {users , createUser} = useUsers();
   const [newUser, setNewUser] = useState<UserRegisterForm>({
     id: 0,
@@ -25,22 +28,36 @@ const RegisterForm = () => {
     //Prevent page reload
     e.preventDefault();
 
-    
-   
+    //Validate form fields
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      return toast.error('All fields are required');
+    }
+
     //Create new user object and remove white spaces
-    const createdUser = { 
-        id:  Math.floor(Math.random() * 1000), name:newUser.name.trim(),email: newUser.email.trim(), password:newUser.password.trim() };
+    const createdUser: UserRegisterForm = { 
+      id: newUser.id || Math.floor(Math.random() * 1000),
+      name: newUser.name.trim(),
+      email: newUser.email.trim(),
+      password: newUser.password.trim()
+    };
 
+    try {
       //Add new user object to the zustand function
-     const {success, message} = await createUser(createdUser);
+      const {success, message} = await createUser(createdUser);
 
-     if(success){
-      toast.success(message);
-     }else{
-      toast.error(message);
-     }
-    //set to empty let the id remain the same
-    setNewUser({id: newUser.id, name: '', email: '', password: ''});  
+      if (success) {
+        toast.success(message);
+        Navigate('/login');
+      } else {
+        toast.error(message);
+      }
+    } catch (error) {
+      toast.error('Failed to create user');
+      console.error(error);
+    }
+
+    //Clear form fields
+    setNewUser({ id: createdUser.id, name: '', email: '', password: '' });
   }
   return (
     <>

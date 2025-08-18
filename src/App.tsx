@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import Page404 from './pages/page404/Page404';
 import RegisterForm from './pages/form/RegisterForm'
 import LoginForm from './pages/form/LoginForm'
+import ProtectRoutes from './components/ProtectRoutes'
 
 function App() {
  
@@ -17,13 +18,19 @@ function App() {
 
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
-          <Route path='/home' element={<Home/>}/>
+        
           <Route path='/register' element={<RegisterForm/>}/>
            <Route path='/login' element={<LoginForm/>}/>
           
           <Route path='/*' element={<Page404/>}/>
 
-         
+{/* Protect routes and components */}
+          <Route path='/home' element={
+              <ProtectRoutes>
+                {/* This is where the children will be rendered components wraaped inside */}
+                      <Home/>  
+              </ProtectRoutes>
+         }/>
         </Routes>
         <Toaster/>
        </div>

@@ -1,8 +1,14 @@
 import React from 'react'
 import Search from '../Search/Search'
 import './Navbar.css'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const Navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    Navigate('/');
+  }
   return (
     <>
    <div  className='navbar-style'>
@@ -23,6 +29,7 @@ const Navbar = () => {
       </ul>
       {/* Search component */}
      <Search/>
+     <button className="btn btn-outline-success" onClick={() => handleLogout()}>Logout</button>
     </div>
   </div>
 </nav>

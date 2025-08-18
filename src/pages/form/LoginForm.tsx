@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useUsers } from '../../globalState/usersStore';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   email: string,
   password: string
 }
 const LoginForm = () => {
-
+//Hooks
+ const Navigate = useNavigate();
   const {users , getAllUsers} = useUsers();
   const [user,setUser] = useState<User>({
     email: '',
@@ -16,8 +18,9 @@ const LoginForm = () => {
 
 
   const handleLogin = async(e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
+   
+   
     //Validation
     if(!user.email || !user.password) {
       return toast.error('Please enter email and password');
@@ -32,8 +35,17 @@ const LoginForm = () => {
     //Login
     //we use await so that we can wait for the promise to resolve
 const {success, message} = await getAllUsers(user.email.trim(),user.password.trim());
+//check if login was successful
+//the await will wait for the getAllUsers function to resolve all its opration before feedback
+//is given to success and message
 if(success){
   toast.success(message);
+     //set token to local storage
+    localStorage.setItem('token', 'true');
+    // use the useNavigate hook
+
+//redirect to the home page
+    Navigate('/home');
 }else{
   toast.error(message);
 }

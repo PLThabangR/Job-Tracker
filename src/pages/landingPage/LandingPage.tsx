@@ -1,7 +1,14 @@
 
+import { useNavigate } from 'react-router-dom';
 import './landing.css'
 const LandingPage = () => {
-  
+  const Navigate = useNavigate();
+    const handleSignUp = () => {
+      Navigate('/register');
+    }
+    const handleLogin = () => {
+      Navigate('/login');
+    }
   return (
     <>
       <div className='header'>
@@ -11,7 +18,7 @@ const LandingPage = () => {
 </h2>
     <div className="btn-container">
 <button className="landing-btn" onClick={() => handleSignUp()}>Sign up</button>
-  <button className="landing-btn">LogIn</button>
+  <button className="landing-btn" onClick={() => handleLogin()}>LogIn</button>
     </div>
  
 </div>

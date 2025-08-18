@@ -45,6 +45,7 @@ const Home = () => {
    
     
     <div className="card-container"  >
+      
   { jobs.length>0 ? <DisplayJobs/>:<h1 className='no-jobs-header'>No Jobs available</h1>} ection:'row',alignItems:'center'
     </div>
 
