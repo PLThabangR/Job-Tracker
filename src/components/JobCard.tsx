@@ -5,6 +5,7 @@ import ModalForm from './ModalForm';
 
 interface JobCardProps {
   id: number;
+  email: string;
   companyName: string;
   role: string;
   date: string;
@@ -13,12 +14,13 @@ interface JobCardProps {
 }
 
 
-const JobCard = ({id,companyName, role, date, jobStatus, extraDetails}: JobCardProps) => {
+const JobCard = ({id,email,companyName, role, date, jobStatus, extraDetails}: JobCardProps) => {
   //Get the delete function from the zustand store
   const {deleteJob} = useJobs();
   const handleDelete = async(id: number) => {
     if (!id) { // Check if id is null or undefined
-      console.error('ID is null or undefined');    
+      console.error('ID is null or undefined');   
+      toast.error('ID is null or undefined');
     return;
     }
       //Call the delete function and pass the id

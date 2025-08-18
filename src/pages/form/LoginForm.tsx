@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import { useUsers } from '../../globalState/usersStore';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +42,9 @@ if(success){
   toast.success(message);
      //set token to local storage
     localStorage.setItem('token', 'true');
+    //set email to local storage 
+    //we can even use redis for storing tokens
+    localStorage.setItem('email',user.email);
     // use the useNavigate hook
 
 //redirect to the home page

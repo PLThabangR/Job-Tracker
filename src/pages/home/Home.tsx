@@ -4,25 +4,56 @@ import Navbar from '../Navbar/Navbar';
 import JobCard from '../../components/JobCard';
 import JobForm from '../form/JobForm';
 import { useJobs } from '../../globalState/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useUsers } from '../../globalState/usersStore';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface JobInterface {
   id: number;
+  email: string;
   companyName: string;
   role: string;
   date: string;
   jobStatus: string;
   extraDetails: string;
 }
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
 const Home = () => {
 
   const {jobs,getAllJobs} = useJobs();
+  const {users} = useUsers();
+  const [userEmail, setUserEmail] = useState<string>((() => {
+    //get email from local storage
+    const userEmail = localStorage.getItem('email')
+    return userEmail ? userEmail.toString() : ""
+  }));
 
   //load function using use effect
   useEffect(() => {
+    //get email from local storage
+    
+    //find the current user
+    const currentUser = users.find((user: User) => user.email === userEmail)
+    //Check if current user is null or undefined
+    if (!currentUser) {
+      toast.error('Current user is null or undefined');
+      return;
+    }
+  
+   
+    setUserEmail(currentUser.email);
+    //we can even use redis for storing tokens
+  //  localStorage.setItem('email',emailString);
     //Call the get all jobs function
- getAllJobs();
-  }, [jobs.length])//dependency array the useffect will only run if the length changes
+ getAllJobs(userEmail);
+  }, [jobs.length,userEmail])//dependency array the useffect will only run if the length changes
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
@@ -30,7 +61,7 @@ const Home = () => {
       return ( //if jobs exits return this error
         jobs.map((job: JobInterface) => (
           job ? (
-            <JobCard key={job.id} id={job.id} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
+            <JobCard key={job.id} id={job.id} email={job.email} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
           ) : null //reutrn null of the is a error with keys
         ))
       );

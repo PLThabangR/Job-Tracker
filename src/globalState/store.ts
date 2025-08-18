@@ -2,19 +2,29 @@
 //Importing the create function from zutand
 import {create} from 'zustand'
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  
+}
 interface Job {
   id: number;
+  email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
   date: string;
-  jobStatus: string;
-  extraDetails: string;
+  jobStatus?: string;
+  extraDetails?: string;
 }
 //defining the type of our state
  type JobState = {
   jobs: Job[];
   createJob: (newJob: Job) => any ;
-  getAllJobs: () => void;
+  getAllJobs: (userEmail: string) => any;
+  deleteJob: (jobId: number) => any;
+  
 }
 
 
@@ -30,7 +40,7 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
   createJob:async (newJob: Job): Promise<{success: boolean, message: string}> => {
    try{
     //Check if all fields are filled from user
-    if(!newJob.companyName || !newJob.role || !newJob.date || !newJob.jobStatus || !newJob.extraDetails){
+    if(!newJob.email || !newJob.companyName || !newJob.role || !newJob.date || !newJob.jobStatus || !newJob.extraDetails){
         return {success: false, message: 'All fields are required'};
     }
     //Make a post request to the backend to create new job
@@ -57,7 +67,7 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
   }//end of createJob
 
   //get all jobs function
-  ,getAllJobs: async () => {
+  ,getAllJobs: async (userEmail: string): Promise<{success: boolean, message: string}> => {
 
   
 
@@ -68,8 +78,13 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
       },});
       //Parse the response to json 
        const data = await response.json();
+
+      //
+
+       //get jobs for the user with the same email
+       const Userjobs = data.filter((job: Job) => job.email === userEmail);
       //we do not use set ... because we are not updating the state
-    set({jobs: data});
+    set({jobs: Userjobs});
       console.log("This is returned after get",data)
        return {success: true, message: 'Jobs fetched successfully'};
    
@@ -78,7 +93,7 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
   //Start of Delete job function
 
   deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
-      
+      console.log("the Id is ",id)
    try{
      //Make a delete request to the backend to delete job
      const response = await fetch(`http://localhost:8000/jobs/${id}`, {
@@ -87,10 +102,12 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
         'Content-Type': 'application/json',
       },
     });
-    
+     console.log("response  ",response.status)
     if(!response.ok){
       throw new Error("Failed to delete job");
     }
+
+     console.log("after resp ")
     //Update the state
     //Use filter to remove the job with the same id and set the state
     set((state) => ({ jobs: state.jobs.filter((job) => job.id !== id) }));
@@ -98,6 +115,7 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
     return {success: true, message: "Job deleted successful"};
    }catch(err){
     //Return this to user if something goes wrong
+    console.log(err)
       return {success: false, message: "Job not deleted "};
    }
   }//End of deleteJob function

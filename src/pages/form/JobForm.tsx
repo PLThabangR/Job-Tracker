@@ -2,19 +2,30 @@ import { useState } from 'react';
 import './form.css'
 import { useJobs } from '../../globalState/store';
 import toast from 'react-hot-toast';
+import { useUsers } from '../../globalState/usersStore';
 
 interface Job {
   id: number;
+  email: string;
   companyName: string;
   role: string;
   date: string;
   jobStatus: string;
   extraDetails: string;
 }
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  
+}
 const JobForm = () => {
   //Hooks
 //import from zustand
   const { jobs,createJob} = useJobs();
+  const {users} = useUsers();
 
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
@@ -27,10 +38,23 @@ const JobForm = () => {
     //Prevent page reload
     e.preventDefault();
     
+    //get email from local storage
+    const email = localStorage.getItem('email');
+    //find the current user
+    const currentUser = users.find((user: User) => user.email === email);
+
+    //Check if current user is null or undefined
+    if (!currentUser) {
+      toast.error('Current user is null or undefined');
+      return;
+    }
+  
+    //conver the emaiol to sring
+    const emailString = currentUser.email.toString();
     
     //Create new job object by using keys and removing white spaces
-    const newJob = { 
-        id: Math.floor(Math.random() * 1000), companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
+    const newJob: Job = { 
+        id: Math.floor(Math.random() * 1000), email: emailString,companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
 
       //Add new job object to the zustand function
      // addJob(newJob);
