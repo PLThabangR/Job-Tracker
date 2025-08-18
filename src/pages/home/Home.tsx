@@ -26,8 +26,8 @@ interface User {
   password: string;
 }
 const Home = () => {
-
-  const {jobs,getAllJobs} = useJobs();
+  const Navigate = useNavigate();
+  const {jobs,getAllJobs,searhArray} = useJobs();
   const {users} = useUsers();
   const [userEmail, setUserEmail] = useState<string>((() => {
     //get email from local storage
@@ -44,10 +44,11 @@ const Home = () => {
     //Check if current user is null or undefined
     if (!currentUser) {
       toast.error('Current user is null or undefined');
+      Navigate('/login');
       return;
     }
-  
-   
+  console.log("jobs array",jobs)
+    console.log("search array",searhArray)
     setUserEmail(currentUser.email);
     //we can even use redis for storing tokens
   //  localStorage.setItem('email',emailString);
@@ -59,14 +60,25 @@ const Home = () => {
   const DisplayJobs=() :any=>{
     if(jobs) {//check if jobs array has values
       return ( //if jobs exits return this error
-        jobs.map((job: JobInterface) => (
+        jobs.map((job) => (
           job ? (
             <JobCard key={job.id} id={job.id} email={job.email} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
           ) : null //reutrn null of the is a error with keys
         ))
       );
-    } else {
-      return null;//if jobs does not exist return null
+    }
+  }
+
+  //diplay filterd jobs
+    const DisplayFilterdJobs=() :any=>{
+    if(searhArray) {//check if jobs array has values
+      return ( //if jobs exits return this error
+        searhArray.map((searchedJob) => (
+          searchedJob ? (
+            <JobCard key={searchedJob.id} id={searchedJob.id} email={searchedJob.email} companyName={searchedJob.companyName} role={searchedJob.role} jobStatus={searchedJob.jobStatus} date={searchedJob.date} extraDetails={searchedJob.extraDetails}/>
+          ) : null //reutrn null of the is a error with keys
+        ))
+      );
     }
   }
   return (
@@ -74,10 +86,10 @@ const Home = () => {
     
 <Navbar/>
    
-    
+      {jobs.length>0 ?<h1 className='no-jobs-header'>Jobs Applied</h1>:  <h1 className='no-jobs-header'>No Jobs available</h1>}
     <div className="card-container"  >
-      
-  { jobs.length>0 ? <DisplayJobs/>:<h1 className='no-jobs-header'>No Jobs available</h1>} ection:'row',alignItems:'center'
+   
+  { searhArray.length>0 ? <DisplayFilterdJobs/>:<DisplayJobs/>} 
     </div>
 
     

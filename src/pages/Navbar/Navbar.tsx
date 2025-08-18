@@ -29,7 +29,7 @@ const Navbar = () => {
       </ul>
       {/* Search component */}
      <Search/>
-     <button className="btn btn-outline-success" onClick={() => handleLogout()}>Logout</button>
+     <button className="btn btn-outline-danger" onClick={() => handleLogout()}>Logout</button>
     </div>
   </div>
 </nav>

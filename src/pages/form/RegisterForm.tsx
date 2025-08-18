@@ -35,7 +35,7 @@ const RegisterForm = () => {
 
     //Create new user object and remove white spaces
     const createdUser: UserRegisterForm = { 
-      id: newUser.id || Math.floor(Math.random() * 1000),
+      id:Number(Math.floor(Math.random() * 1000)),
       name: newUser.name.trim(),
       email: newUser.email.trim(),
       password: newUser.password.trim()

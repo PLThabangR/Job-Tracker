@@ -36,11 +36,7 @@ const JobCard = ({id,email,companyName, role, date, jobStatus, extraDetails}: Jo
 //creating the modal state
 
 
-const handleUpdate = (id: number) => {
-  
 
-
-}
   return (
     <>
     <div className="card" style={{width:' 20rem', marginTop:'10px',marginBottom:'10px'}}>

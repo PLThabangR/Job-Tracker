@@ -21,17 +21,21 @@ interface Job {
 //defining the type of our state
  type JobState = {
   jobs: Job[];
+  searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
   deleteJob: (jobId: number) => any;
+  searchByCompanyName: (searchTerm: string) => any;
   
 }
 
 
 
 //We are defining our custom hook using th create method
-export const useJobs = create<JobState>((set) => ({//set is a special name allows us to change our value
+export const useJobs = create<JobState>((set,get) => ({//set is a special name allows us to change our value
+  //get is also a special value to get our value to scope uin arrow function
     jobs: [], //initial value\
+    searhArray: [],//initial value fro searched array
     //function to update out state
    // setJobs: (jobs: Job[]) => set({jobs}),
    setJobs: (jobs: Job[]) => set({jobs}),
@@ -161,6 +165,17 @@ export const useJobs = create<JobState>((set) => ({//set is a special name allow
    }
   },//end of updateJob
 // Set the state of job to the filtered jobs this will render
-  searchByCompanyName : (searchTerm: string) => set((state) => ({jobs: state.jobs.filter((job) => job.companyName.toLowerCase().includes(searchTerm.toLowerCase()))})),
+  searchByCompanyName : (searchTerm:string)=>{
+    const {searhArray,jobs} = get();
+  const filteredJobs = jobs.filter((job: Job) => job.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
+   
+  set({searhArray: filteredJobs});
+
+  //logic to set jobs back to empty
+  if(searchTerm === ''){//if the search term is empty return all jobs
+    set({searhArray: jobs});
+  }
+  
+  },
 
 }))

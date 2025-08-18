@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 interface ProtectRoutesProps {
     children: React.ReactNode
 }
-const ProtectRoutes = ({children}) => {
+const ProtectRoutes = ({children}:ProtectRoutesProps) => {
     //check for token in the local storage
  const isAuthenticated = localStorage.getItem('token')
   if (!isAuthenticated) {

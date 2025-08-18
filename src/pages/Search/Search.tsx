@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useJobs } from "../../globalState/store";
 import Home from "../home/Home";
+import toast from "react-hot-toast";
 
 
 interface JobInterface {
@@ -12,31 +13,47 @@ interface JobInterface {
   extraDetails: string;
 }
 const Search = () => {
-  const {searchByCompanyName} = useJobs();
+  const {searchByCompanyName,searhArray} = useJobs();
 //const [jobs ,getAllJobs] = useJobs();
   //Hooks
   const [search, setSearch] = useState('');
   //array of jobs 
 //  const [searchResults, setSearchResults] = useState<JobInterface[]>([]);
 
-const handleSearch = () => {
+useEffect(() => {
   
+  //  setSearch(search);
+   // let this function run as the seach changes
+   handleSearch(event); 
+}, [search]); 
+
+const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
     //const {jobs,getAllJobs} = useJobs();
   //Use the filter method
   // const filteredJobs = jobs.filter((job: JobInterface) => job.companyName.toLowerCase().includes(search.toLowerCase()));
    // setSearchResults(filteredJobs);
    //Use the searchByCompanyName function from the useJobs hook
-   searchByCompanyName(search);
+   //pass the seached term to the search  Job function
+  //  if( search === ''){
+  //    return toast.error('Search term is too short');
+     
+  //  }
+   const trimmed = search.trim();
+  searchByCompanyName(trimmed);
 
+
+  
+ 
 
 
 }
   return (
     <div>
 
-         <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" onClick={() => handleSearch()}>Search</button>
+         <form className="d-flex" >
+        <input className="form-control me-2" type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search for jobs" aria-label="Search"/>
+        <button className="btn btn-outline-success" onClick={(e) => handleSearch(e)}>Search</button>
       </form>
      
     

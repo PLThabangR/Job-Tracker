@@ -54,7 +54,7 @@ const JobForm = () => {
     
     //Create new job object by using keys and removing white spaces
     const newJob: Job = { 
-        id: Math.floor(Math.random() * 1000), email: emailString,companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
+        id: Number(Math.floor(Math.random() * 1000)), email: emailString,companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
 
       //Add new job object to the zustand function
      // addJob(newJob);
