@@ -25,7 +25,7 @@ interface User {
   password: string;
 }
 const Home = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const {jobs,getAllJobs,searhArray} = useJobs();
   const {users} = useUsers();
   const [userEmail, setUserEmail] = useState<string>((() => {
@@ -43,7 +43,7 @@ const Home = () => {
     //Check if current user is null or undefined
     if (!currentUser) {
       toast.error('Current user is null or undefined');
-      Navigate('/login');
+      navigate('/login');
       return;
     }
   
@@ -60,9 +60,16 @@ const Home = () => {
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
+    if(!jobs || jobs.length === 0) {//check if jobs array has values
+      return ( //if jobs exits return this error
+        <h1 className='no-jobs-header'>No Jobs available</h1>
+      );
+    }
     if(jobs) {//check if jobs array has values
       return ( //if jobs exits return this error
+        
         jobs.map((job) => (
+          
           job ? (
             <JobCard key={job.id} id={job.id} email={job.email} companyName={job.companyName} role={job.role} jobStatus={job.jobStatus} date={job.date} extraDetails={job.extraDetails}/>
           ) : null //reutrn null of the is a error with keys
@@ -88,9 +95,9 @@ const Home = () => {
     
 <Navbar/>
    
-      {jobs.length>0 ?<h1 className='no-jobs-header'>Jobs Applied</h1>:  <h1 className='no-jobs-header'>No Jobs available</h1>}
+
     <div className="card-container"  >
-   
+  {jobs.length > 0 && <h1 className='no-jobs-header'>Jobs Applied</h1>}
   { searhArray.length>0 ? <DisplayFilterdJobs/>:<DisplayJobs/>} 
     </div>
 

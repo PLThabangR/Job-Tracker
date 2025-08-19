@@ -14,29 +14,17 @@ interface JobCardProps {
   extraDetails: string;
 }
 
-const JobCard = ({
-  id,
-  email,
-  companyName,
-  role,
-  date,
-  jobStatus,
-  extraDetails,
-}: JobCardProps) => {
-  const [jobDetails, setJobDetails] = useState<JobCardProps>({
-    id,
-    email,
-    companyName,
-    role,
-    date,
-    jobStatus,
-    extraDetails,
-  });
-
-  const { deleteJob } = useJobs();
+const JobCard = (
+  job: JobCardProps) => {
+  const [jobDetails, setJobDetails] = useState<JobCardProps>(job);
+  // Destructure the props
+  const { id, email, companyName, role, date, jobStatus, extraDetails } = jobDetails;
+  const { deleteJob ,updateJobStore} = useJobs();
+//control the modal 
+const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async (id: number) => {
-    console.log('id to be deleted:', id);
+  
     if (!id) {
       toast.error('ID is null or undefined');
       return;
@@ -50,16 +38,24 @@ const JobCard = ({
     }
   };
 
-  const handleUpdate = (jobToBeUpdated: JobCardProps) => {
-    console.log('Update clicked for id:', jobToBeUpdated.id);
-    setJobDetails(jobToBeUpdated);
-  };
+   const openModal = () => {
 
-  // Log whenever jobDetails updates
-  useEffect(() => {
-    if(jobDetails){
-    console.log('Updated jobDetails use:', jobDetails);}
-  }, [jobDetails]);
+ setIsModalOpen(true); // open modal after state is set
+   };
+
+   const handleUpdate =async (id: number,updatedJob:JobCardProps) => {
+      const {success, message} =  await updateJobStore(id,updatedJob);
+      if(success){
+        toast.success(message);
+       
+      }else{
+        toast.error(message);
+        //clear state if the is error occored
+       
+      }
+
+    }
+
 
   return (
     <>
@@ -77,19 +73,8 @@ const JobCard = ({
 
           <button
             className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target={`#updateFormModel-${id}`}
-            onClick={() =>
-              handleUpdate({
-                id,
-                email,
-                companyName,
-                role,
-                date,
-                jobStatus,
-                extraDetails,
-              })
-            }
+            onClick={openModal}
+            
           >
             Update
           </button>
@@ -104,19 +89,53 @@ const JobCard = ({
       </div>
 
       {/* Modal */}
-      <div className="modal" id="updateFormModel">
-        {jobDetails && (
-          <ModalForm
-            id={jobDetails.id}
-            email={jobDetails.email}
-            companyName={jobDetails.companyName}
-            role={jobDetails.role}
-            date={jobDetails.date}
-            jobStatus={jobDetails.jobStatus}
-            extraDetails={jobDetails.extraDetails}
-          />
-        )}
+     {isModalOpen && (
+       <div className="modal show d-block" tabIndex={-1}>
+      
+           <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1>{id}</h1>
+        <h5 className="modal-title" style={{textAlign:'center'}}>Update job informaton</h5>
+        <button type="button" className="btn-close" onClick={() => setIsModalOpen(false)}></button>
       </div>
+      <div className="modal-body">
+       <form>
+  <div className="mb-3">
+    <label htmlFor="companyName" className="form-label">Company name</label>
+    <input type="text" className="form-control" id="companyName" value={jobDetails.companyName} onChange={(e) => setJobDetails({...jobDetails, companyName: e.target.value})}/>
+
+  </div>
+  <div className="mb-3">
+    <label htmlFor="role" className="form-label">Role</label>
+    <input type="text" className="form-control" id="role" value={jobDetails.role} onChange={(e) => setJobDetails({...jobDetails, role: e.target.value})} />
+  </div>
+
+  <div className="mb-3">
+    <label htmlFor="date" className="form-label">Posted date</label>
+    <input type="date" className="form-control" id="date" value={jobDetails.date} onChange={(e) => setJobDetails({...jobDetails, date: e.target.value})}/>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="jobStatus" className="form-label">Status</label>
+    <input type="text" className="form-control" id="jobStatus" value={jobDetails.jobStatus} onChange={(e) => setJobDetails({...jobDetails, jobStatus: e.target.value})}/>
+  </div>
+
+   <div className="mb-3">
+    <label htmlFor="extraDetails" className="form-label">Extra Details</label>
+    <input type="text" className="form-control" id="extraDetails" value={jobDetails.extraDetails} onChange={(e) => setJobDetails({...jobDetails, extraDetails: e.target.value})}/>
+  </div>
+
+</form>
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary"  onClick={() => setIsModalOpen(false)}>Close</button>
+        {/* this button open and closes the modal */}
+        <button type="button" className="btn btn-primary" onClick={() => handleUpdate(jobDetails.id,jobDetails)} >Save changes</button>
+      </div>
+    </div>
+  </div>
+      </div>
+     )}
     </>
   );
 };

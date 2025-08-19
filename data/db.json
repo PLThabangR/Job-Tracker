@@ -1,57 +1,72 @@
 {
   "users": [
     {
-      "id": 329,
+      "id": "329",
       "name": "thabanag",
       "email": "rakgoropothabang@gmail.com",
       "password": "123456"
+    },
+    {
+      "id": 940,
+      "name": "khomotso",
+      "email": "khomo@gmail.com",
+      "password": "12345"
     }
   ],
   "jobs": [
     {
-      "id": 797,
+      "id": 472,
       "email": "rakgoropothabang@gmail.com",
-      "companyName": "ioco",
-      "role": "Frontend",
-      "date": "2024-12-01",
+      "companyName": "Mzali",
+      "role": "developer",
+      "date": "2025-08-06",
+      "jobStatus": "Pending",
+      "extraDetails": "Working with various tech stack"
+    },
+    {
+      "id": 831,
+      "email": "khomo@gmail.com",
+      "companyName": "fnb",
+      "role": "sales",
+      "date": "2025-07-30",
+      "jobStatus": "Pending",
+      "extraDetails": "jbjb"
+    },
+    {
+      "id": 785,
+      "email": "khomo@gmail.com",
+      "companyName": "BMW",
+      "role": "sales",
+      "date": "2025-08-07",
       "jobStatus": "Pending",
       "extraDetails": "Software update"
     },
     {
-      "id": 719,
+      "id": 997,
+      "email": "khomo@gmail.com",
+      "companyName": "Benz",
+      "role": "Mechanic",
+      "date": "2025-08-02",
+      "jobStatus": "Pending",
+      "extraDetails": "works"
+    },
+    {
+      "id": 62,
       "email": "rakgoropothabang@gmail.com",
-      "companyName": "Plumblink SA | Johannesburg",
-      "role": "Manager",
-      "date": "2025-04-21",
+      "companyName": "BBD",
+      "role": "sales",
+      "date": "2025-08-08",
       "jobStatus": "Pending",
       "extraDetails": "Working in logistics"
     },
     {
-      "id": 402,
+      "id": 550,
       "email": "rakgoropothabang@gmail.com",
-      "companyName": "BBD",
-      "role": "Developer",
-      "date": "2024-12-04",
+      "companyName": "Mall of africa",
+      "role": "Clearner",
+      "date": "2024-10-21",
       "jobStatus": "Success",
-      "extraDetails": "Working with various tech stack"
-    },
-    {
-      "id": 913,
-      "email": "rakgoropothabang@gmail.com",
-      "companyName": "The",
-      "role": "sales",
-      "date": "2025-08-29",
-      "jobStatus": "Success",
-      "extraDetails": "jbjb"
-    },
-    {
-      "id": 649,
-      "email": "rakgoropothabang@gmail.com",
-      "companyName": "Plumblink SA",
-      "role": "sales",
-      "date": "2020-02-27",
-      "jobStatus": "Pending",
-      "extraDetails": "works"
+      "extraDetails": "Working in logistics"
     }
   ]
 }

@@ -15,12 +15,13 @@ interface JobModalProps {
 
 const ModalForm = ({id,companyName,email, role, date, jobStatus, extraDetails}: JobModalProps) => {
 
-    const [updateJob,setUpdateJob] = useState<JobModalProps>({id,email,companyName, role, date, jobStatus, extraDetails}); 
+    const [updateJob, setUpdateJob] = useState<JobModalProps>({id,email,companyName, role, date, jobStatus, extraDetails});
+    
     const {updateJobStore} = useJobs();
-    const handleUpdate =async (id: number,updatedJob: JobModalProps) => {
-      console.log("updated job",updatedJob)
+    const handleUpdate =async () => {
+      console.log("##########update job in modal",updateJob)
       console.log("id",id)
-      const {success, message} =  await updateJobStore(id,updatedJob);
+      const {success, message} =  await updateJobStore(id,updateJob);
       if(success){
         toast.success(message);
        
@@ -71,7 +72,7 @@ const ModalForm = ({id,companyName,email, role, date, jobStatus, extraDetails}: 
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         {/* this button open and closes the modal */}
-        <button type="button" className="btn btn-primary" onClick={() => handleUpdate(id,updateJob)} data-bs-dismiss="modal">Save changes</button>
+        <button type="button" className="btn btn-primary" onClick={handleUpdate} data-bs-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
