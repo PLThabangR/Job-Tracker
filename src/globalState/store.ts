@@ -11,7 +11,7 @@ interface Job {
   jobStatus: string;
   extraDetails?: string;
 }
-//defining the type of our state
+//defining the type of our job state
  type JobState = {
   jobs: Job[];
   searhArray: Job[];
@@ -31,12 +31,9 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
     jobs: [], //initial value\
     searhArray: [],//initial value fro searched array
     //function to update out state
-   // setJobs: (jobs: Job[]) => set({jobs}),
    setJobs: (jobs: Job[]) => set({jobs}),
-//   addJob: (newJob: Job) => set((state) => ({ jobs: [...state.jobs, newJob] })),
 //This function returns a promise of an object
   createJob:async (newJob: Job): Promise<{success: boolean, message: string}> => {
-    console.log(newJob.id)
    try{
     //Check if all fields are filled from user
     if(!newJob.email || !newJob.companyName || !newJob.role || !newJob.date || !newJob.jobStatus || !newJob.extraDetails){
@@ -146,7 +143,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
       headers: {
         'Content-Type': 'application/json',
       },
-      //Send the updated job object as a string
+      //Send the updated job object as a javascropt object string
       body: JSON.stringify({
         id: id,
         companyName: updatedJob.companyName,

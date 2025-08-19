@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast';
 import { useJobs } from '../globalState/store';
 import './JobCard.css';
-import ModalForm from './ModalForm';
-import { useEffect, useState } from 'react';
+
+import {  useState } from 'react';
 
 interface JobCardProps {
   id: number;
@@ -64,7 +64,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         style={{ width: '20rem', marginTop: '10px', marginBottom: '10px' }}
       >
         <div className="card-body">
-          <h1>{id}</h1>
+         
           <h5 className="card-title">{companyName}</h5>
           <h6 className="card-title">{role}</h6>
           <p className="card-text">{date}</p>
@@ -88,7 +88,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal start here */}
      {isModalOpen && (
        <div className="modal show d-block" tabIndex={-1}>
       

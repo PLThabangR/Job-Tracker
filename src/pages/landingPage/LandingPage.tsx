@@ -17,7 +17,7 @@ const LandingPage = () => {
   Organize, monitor, and follow up on all your job applications in one simple dashboard.
 </h2>
     <div className="btn-container">
-<button className="landing-btn" onClick={() => handleSignUp()}>Sign up</button>
+<button className="landing-btn " onClick={() => handleSignUp()}>Sign up</button>
   <button className="landing-btn" onClick={() => handleLogin()}>LogIn</button>
     </div>
  

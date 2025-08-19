@@ -19,8 +19,7 @@ const ModalForm = ({id,companyName,email, role, date, jobStatus, extraDetails}: 
     
     const {updateJobStore} = useJobs();
     const handleUpdate =async () => {
-      console.log("##########update job in modal",updateJob)
-      console.log("id",id)
+      
       const {success, message} =  await updateJobStore(id,updateJob);
       if(success){
         toast.success(message);

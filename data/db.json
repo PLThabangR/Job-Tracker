@@ -13,5 +13,15 @@
       "password": "12345"
     }
   ],
-  "jobs": []
+  "jobs": [
+    {
+      "id": "19b6",
+      "email": "khomo@gmail.com",
+      "companyName": "ioco",
+      "role": "developer",
+      "date": "2025-08-04",
+      "jobStatus": "Pending",
+      "extraDetails": "Software update"
+    }
+  ]
 }
