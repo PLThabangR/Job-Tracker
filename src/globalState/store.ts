@@ -2,21 +2,14 @@
 //Importing the create function from zutand
 import {create} from 'zustand'
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  
-}
 interface Job {
   id: number;
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
   date: string;
-  jobStatus?: string;
-  extraDetails?: string;
+  jobStatus: string;
+  extraDetails: string;
 }
 //defining the type of our state
  type JobState = {
@@ -24,6 +17,7 @@ interface Job {
   searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
+  updateJobStore: (jobId: number,updatedJob: Job) => any;
   deleteJob: (jobId: number) => any;
   searchByCompanyName: (searchTerm: string) => any;
   
@@ -72,9 +66,6 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 
   //get all jobs function
   ,getAllJobs: async (userEmail: string): Promise<{success: boolean, message: string}> => {
-
-  
-
      const response = await fetch('http://localhost:8000/jobs',{
       method: 'GET',
       headers: {
@@ -166,15 +157,17 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   },//end of updateJob
 // Set the state of job to the filtered jobs this will render
   searchByCompanyName : (searchTerm:string)=>{
+    //variable to store the filtered jobs
+    let  filteredJobs: Job[] = [];
+    //get the state of this component
+    //becuase we are using  arrow function they do not have access to this method
     const {searhArray,jobs} = get();
-  const filteredJobs = jobs.filter((job: Job) => job.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
-   
-  set({searhArray: filteredJobs});
-
-  //logic to set jobs back to empty
-  if(searchTerm === ''){//if the search term is empty return all jobs
-    set({searhArray: jobs});
-  }
+    if(searchTerm.length>0){//if the search term is empty return all jobs
+       filteredJobs = jobs.filter((job: Job) => job.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
+       set({searhArray: filteredJobs});
+    }else{
+      set({searhArray:[]});
+    }
   
   },
 

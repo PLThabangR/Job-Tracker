@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useUsers } from '../../globalState/usersStore';
 ;
 import {useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 interface Job {
   id: number;
@@ -87,7 +88,7 @@ const JobForm = () => {
   return (
     <>
   
-  
+
 <div className='container content' >
   
 <form  onSubmit={handleSubmit}>

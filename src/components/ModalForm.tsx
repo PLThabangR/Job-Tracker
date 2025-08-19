@@ -1,21 +1,25 @@
-import React, { useState } from 'react'
+
 import toast from 'react-hot-toast';
 import { useJobs } from '../globalState/store';
+import { useState } from 'react';
 
 interface JobModalProps {
-  id: number;
+ id: number;
+  email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
   date: string;
   jobStatus: string;
-  extraDetails: string; 
+  extraDetails: string;
 }
 
-const ModalForm = ({id,companyName, role, date, jobStatus, extraDetails}: JobModalProps) => {
+const ModalForm = ({id,companyName,email, role, date, jobStatus, extraDetails}: JobModalProps) => {
 
-    const [updateJob,setUpdateJob] = useState<JobModalProps>({id,companyName, role, date, jobStatus, extraDetails}); 
+    const [updateJob,setUpdateJob] = useState<JobModalProps>({id,email,companyName, role, date, jobStatus, extraDetails}); 
     const {updateJobStore} = useJobs();
     const handleUpdate =async (id: number,updatedJob: JobModalProps) => {
+      console.log("updated job",updatedJob)
+      console.log("id",id)
       const {success, message} =  await updateJobStore(id,updatedJob);
       if(success){
         toast.success(message);
@@ -23,7 +27,7 @@ const ModalForm = ({id,companyName, role, date, jobStatus, extraDetails}: JobMod
       }else{
         toast.error(message);
         //clear state if the is error occored
-        setUpdateJob({id,companyName:"", role:"", date:"", jobStatus:"", extraDetails:""});
+        setUpdateJob({id,email:email,companyName:"", role:"", date:"", jobStatus:"", extraDetails:""});
       }
 
     }
@@ -32,6 +36,7 @@ const ModalForm = ({id,companyName, role, date, jobStatus, extraDetails}: JobMod
      <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
+        <h1>{id}</h1>
         <h5 className="modal-title" style={{textAlign:'center'}}>Update job informaton</h5>
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
