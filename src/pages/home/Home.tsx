@@ -60,11 +60,6 @@ const Home = () => {
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
-    if(!jobs || jobs.length === 0) {//check if jobs array has values
-      return ( //if jobs exits return this error
-        <h1 className='no-jobs-header'>No Jobs available</h1>
-      );
-    }
     if(jobs) {//check if jobs array has values
       return ( //if jobs exits return this error
         
@@ -95,9 +90,8 @@ const Home = () => {
     
 <Navbar/>
    
-
+{jobs.length > 0 ? <h1 className='no-jobs-header'>Jobs Applied</h1>:<h1 className='no-jobs-header'>No jobs applied</h1> }
     <div className="card-container"  >
-  {jobs.length > 0 && <h1 className='no-jobs-header'>Jobs Applied</h1>}
   { searhArray.length>0 ? <DisplayFilterdJobs/>:<DisplayJobs/>} 
     </div>
 

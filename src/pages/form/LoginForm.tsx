@@ -1,7 +1,7 @@
 import React, { use, useState } from 'react'
 import { useUsers } from '../../globalState/usersStore';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface User {
   email: string,
@@ -71,6 +71,7 @@ if(success){
  
 
   <button type="submit" className="btn btn-primary">Login</button>
+  <p className='dont-have-accout'>Don't have an account? <Link to="/register">Register</Link></p>
 </form>
  </div>
     

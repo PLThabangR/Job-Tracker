@@ -3,13 +3,13 @@
 import {create} from 'zustand'
 
 interface Job {
-  id: number;
+  id?: number;
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
   date: string;
   jobStatus: string;
-  extraDetails: string;
+  extraDetails?: string;
 }
 //defining the type of our state
  type JobState = {
@@ -36,6 +36,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 //   addJob: (newJob: Job) => set((state) => ({ jobs: [...state.jobs, newJob] })),
 //This function returns a promise of an object
   createJob:async (newJob: Job): Promise<{success: boolean, message: string}> => {
+    console.log(newJob.id)
    try{
     //Check if all fields are filled from user
     if(!newJob.email || !newJob.companyName || !newJob.role || !newJob.date || !newJob.jobStatus || !newJob.extraDetails){
@@ -47,13 +48,14 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
       headers: {
         'Content-Type': 'application/json',
       },
-      //Send the new job object as a string
+      //Convert javascript object into json string
       body: JSON.stringify(newJob),
     });
-    //Parse the response to json
+    //JSON string is parsed back into a JavaScript object 
     const data = await response.json();
 
     //Update the state
+    //state mean previous state .job then update with data.jobs
     set((state) => ({ jobs: [...state.jobs, data.jobs] }))
     //Return the data
     return {success: true, message: "Job created successful"};
@@ -74,13 +76,12 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
       //Parse the response to json 
        const data = await response.json();
 
-      //
+   
 
        //get jobs for the user with the same email
        const Userjobs = data.filter((job: Job) => job.email === userEmail);
       //we do not use set ... because we are not updating the state
     set({jobs: Userjobs});
-      console.log("This is returned after get",data)
        return {success: true, message: 'Jobs fetched successfully'};
    
   },
@@ -88,8 +89,11 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   //Start of Delete job function
 
   deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
-      console.log("the Id is ",id)
    try{
+    //Check if id is null or undefined
+     if(!id){
+       throw new Error("Id is null or undefined");
+     }
      //Make a delete request to the backend to delete job
      const response = await fetch(`http://localhost:8000/jobs/${id}`, {
       method: 'DELETE',
@@ -102,8 +106,12 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
       throw new Error("Failed to delete job");
     }
 
-     console.log("after resp ")
+   
     //Update the state
+    const jobs = get().jobs;
+    if(!jobs){
+      throw new Error("Jobs is null or undefined");
+    }
     //Use filter to remove the job with the same id and set the state
     set((state) => ({ jobs: state.jobs.filter((job) => job.id !== id) }));
     //Return the data
@@ -117,7 +125,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 
   //update job start here
   ,updateJobStore: async (id: number,updatedJob: Job): Promise<{success: boolean, message: string}> => {
-      console.log("To be updated",updatedJob,id)
+      console.log("To be updated",typeof(id))
     
     if(!updatedJob.companyName || !updatedJob.role || !updatedJob.date || !updatedJob.jobStatus || !updatedJob.extraDetails){
         return {success: false, message: 'All fields are required'};
@@ -134,12 +142,19 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
    try{
      //Make a put request to the backend to update job
      const response = await fetch(`http://localhost:8000/jobs/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       //Send the updated job object as a string
-      body: JSON.stringify(updatedJob),
+      body: JSON.stringify({
+        id: id,
+        companyName: updatedJob.companyName,
+        role: updatedJob.role,
+        date: updatedJob.date,
+        jobStatus: updatedJob.jobStatus,
+        extraDetails: updatedJob.extraDetails
+      }),
     });
     //if the response is not ok throw error
     if(!response.ok){

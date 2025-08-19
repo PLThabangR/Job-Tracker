@@ -4,7 +4,7 @@ import { useJobs } from '../../globalState/store';
 import toast from 'react-hot-toast';
 import { useUsers } from '../../globalState/usersStore';
 ;
-import {useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 
 interface Job {
@@ -18,7 +18,7 @@ interface Job {
 }
 
 interface User {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;
@@ -65,7 +65,8 @@ const JobForm = () => {
     
     //Create new job object by using keys and removing white spaces
     const newJob: Job = { 
-        id: Number(Math.floor(Math.random() * 1000)), email: emailString,companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
+      //  id: Number(Math.floor(Math.random() * 1000)),
+         email: emailString.trim(),companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
 
       //Add new job object to the zustand function
      // addJob(newJob);
@@ -118,6 +119,8 @@ const JobForm = () => {
   </div>
 
   <button type="submit" className="btn btn-primary">Post job</button>
+  <Link to={'/home'}><button type="submit" style={{marginLeft:'1rem'}} className="btn btn-primary">Back</button></Link>
+  
 </form>
 </div>
 
