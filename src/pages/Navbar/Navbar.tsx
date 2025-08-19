@@ -1,12 +1,13 @@
-import React from 'react'
+
 import Search from '../Search/Search'
 import './Navbar.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const Navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('token');
+   // localStorage.removeItem('token');
+    localStorage.clear()
     Navigate('/');
   }
   return (
@@ -14,7 +15,7 @@ const Navbar = () => {
    <div  className='navbar-style'>
      <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#">Job Tracker</a>
+    <Link className='router-links' to={'/home'}><h1 className="navbar-brand main-header" >Job Tracker</h1></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -22,7 +23,7 @@ const Navbar = () => {
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         
         <li className="nav-item" >
-          <a className="nav-link" href="#">Post a job</a>
+          <Link className='router-links' to={'/create-jobs'}><h1 className="nav-link" >Post a job</h1></Link>
         </li>
        
        

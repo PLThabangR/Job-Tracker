@@ -14,11 +14,9 @@ interface JobModalProps {
 const ModalForm = ({id,companyName, role, date, jobStatus, extraDetails}: JobModalProps) => {
 
     const [updateJob,setUpdateJob] = useState<JobModalProps>({id,companyName, role, date, jobStatus, extraDetails}); 
-
     const {updateJobStore} = useJobs();
     const handleUpdate =async (id: number,updatedJob: JobModalProps) => {
       const {success, message} =  await updateJobStore(id,updatedJob);
-
       if(success){
         toast.success(message);
        

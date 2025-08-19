@@ -7,6 +7,7 @@ import Page404 from './pages/page404/Page404';
 import RegisterForm from './pages/form/RegisterForm'
 import LoginForm from './pages/form/LoginForm'
 import ProtectRoutes from './components/ProtectRoutes'
+import JobForm from './pages/form/JobForm'
 
 function App() {
  
@@ -21,7 +22,6 @@ function App() {
         
           <Route path='/register' element={<RegisterForm/>}/>
            <Route path='/login' element={<LoginForm/>}/>
-          
           <Route path='/*' element={<Page404/>}/>
 
 {/* Protect routes and components */}
@@ -31,6 +31,19 @@ function App() {
                       <Home/>  
               </ProtectRoutes>
          }/>
+         {/* Protect routes and components  */}
+<Route path='/create-jobs' element={
+              <ProtectRoutes>
+                {/* This is where the children will be rendered components wraaped inside */}
+                      <JobForm/>  
+              </ProtectRoutes>
+         }/>
+
+
+
+
+
+         
         </Routes>
         <Toaster/>
        </div>

@@ -126,8 +126,8 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 
   //update job start here
   ,updateJobStore: async (id: number,updatedJob: Job): Promise<{success: boolean, message: string}> => {
-      console.log(updatedJob)
-      console.log(id)
+      console.log("To be updated",updatedJob)
+      console.log("Id to be update",id)
     if(!updatedJob.companyName || !updatedJob.role || !updatedJob.date || !updatedJob.jobStatus || !updatedJob.extraDetails){
         return {success: false, message: 'All fields are required'};
     }

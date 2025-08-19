@@ -48,9 +48,9 @@ const JobCard = ({id,email,companyName, role, date, jobStatus, extraDetails}: Jo
     <p className="card-text">{extraDetails}.</p>
     <p className="card-text">{date}</p>
     <p className="card-text">{jobStatus}</p>
-    <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateFormModel">Update</a>
+    <a  className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateFormModel">Update</a>
 
-    <a href="#" className="btn btn-danger"  onClick={() => handleDelete(id)}>Delete</a>
+    <a className="btn btn-danger"  onClick={() => handleDelete(id)}>Delete</a>
       {/* modal */}
   </div>
 </div>

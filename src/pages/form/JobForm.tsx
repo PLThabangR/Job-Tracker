@@ -3,6 +3,8 @@ import './form.css'
 import { useJobs } from '../../globalState/store';
 import toast from 'react-hot-toast';
 import { useUsers } from '../../globalState/usersStore';
+;
+import {useNavigate } from 'react-router-dom';
 
 interface Job {
   id: number;
@@ -26,12 +28,20 @@ const JobForm = () => {
 //import from zustand
   const { jobs,createJob} = useJobs();
   const {users} = useUsers();
+  const Navigate = useNavigate();
 
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
   const [date, setDate] = useState('');
   const [jobStatus, setJobStatus] = useState('');
   const [extraDetails, setExtraDetails] = useState('');
+//get local email to check if user is authenticated
+ const [userEmail, setUserEmail] = useState<string>((() => {
+    //get email from local storage
+    const userEmail = localStorage.getItem('email')
+    return userEmail ? userEmail.toString() : ""
+  }));
+
 
   //Handle submit
   const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,6 +72,7 @@ const JobForm = () => {
 
      if(success){
       toast.success(message);
+    
      }else{
       toast.error(message);
      }
@@ -71,12 +82,16 @@ const JobForm = () => {
     setDate('');
     setJobStatus('');
     setExtraDetails('');
-    console.log(jobs)
+     // 
   }
   return (
     <>
-
+  
+  
+<div className='container content' >
+  
 <form  onSubmit={handleSubmit}>
+  <h1 className='no-jobs-header'>Add a new job</h1>
   <div className="mb-3">
     <label htmlFor="companyName" className="form-label">Company name</label>
     <input type="text" className="form-control" id="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
@@ -103,6 +118,7 @@ const JobForm = () => {
 
   <button type="submit" className="btn btn-primary">Post job</button>
 </form>
+</div>
 
     
     </>

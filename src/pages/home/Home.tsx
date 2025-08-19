@@ -2,7 +2,6 @@
 import './home.css';
 import Navbar from '../Navbar/Navbar';
 import JobCard from '../../components/JobCard';
-import JobForm from '../form/JobForm';
 import { useJobs } from '../../globalState/store';
 import { useEffect, useState } from 'react';
 import { useUsers } from '../../globalState/usersStore';
@@ -47,14 +46,17 @@ const Home = () => {
       Navigate('/login');
       return;
     }
-  console.log("jobs array",jobs)
-    console.log("search array",searhArray)
+  
+  
     setUserEmail(currentUser.email);
     //we can even use redis for storing tokens
   //  localStorage.setItem('email',emailString);
     //Call the get all jobs function
- getAllJobs(userEmail);
-  }, [jobs.length,userEmail])//dependency array the useffect will only run if the length changes
+    DisplayJobs(); //Call the get all jobs function
+    //Call the get all jobs function search change
+    DisplayFilterdJobs()//get seached jobs
+ getAllJobs(userEmail); //Call the get all jobs function associated withn this email
+  }, [jobs.length,userEmail,searhArray.length>0 ])//dependency array the useffect will only run if the length changes or user ermail changes
 
   //Maping jobs to card using this functon
   const DisplayJobs=() :any=>{
@@ -93,7 +95,7 @@ const Home = () => {
     </div>
 
     
-    <JobForm/>
+    
     </>
   )
 }

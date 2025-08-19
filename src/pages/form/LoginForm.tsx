@@ -56,7 +56,8 @@ if(success){
   }
   return (
     <>
-   <form onSubmit={handleLogin}>
+ <div className='container content'>
+    <form onSubmit={handleLogin}>
  <h1 className='form-header'>Login</h1>
   <div className="mb-3">
     <label htmlFor="email" className="form-label">Email</label>
@@ -71,6 +72,7 @@ if(success){
 
   <button type="submit" className="btn btn-primary">Login</button>
 </form>
+ </div>
     
     </>
   )

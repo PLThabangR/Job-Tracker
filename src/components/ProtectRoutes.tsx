@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
 
 
@@ -9,9 +10,15 @@ const ProtectRoutes = ({children}:ProtectRoutesProps) => {
     //check for token in the local storage
  const isAuthenticated = localStorage.getItem('token')
   if (!isAuthenticated) {
-
+    toast.error('You are not logged in');
+    //redirect to login
     return <Navigate to="/login" />
   }
+
+
+
+
+  
     return (
     <div>
         {/* This is where the children will be rendered components wraaped inside */}

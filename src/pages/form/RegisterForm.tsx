@@ -61,7 +61,8 @@ const RegisterForm = () => {
   }
   return (
     <>
-<form onSubmit={handleSubmit }>
+<div className='container content'>
+  <form onSubmit={handleSubmit }>
   <h1 className='form-header'>Sign up</h1>
   <div className="mb-3">
     <label htmlFor="jobName" className="form-label">Name</label>
@@ -81,6 +82,7 @@ const RegisterForm = () => {
 
   <button type="submit" className="btn btn-primary">Register</button>
 </form>
+</div>
     </>
   )
 }

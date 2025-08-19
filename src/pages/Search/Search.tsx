@@ -24,7 +24,7 @@ useEffect(() => {
   
   //  setSearch(search);
    // let this function run as the seach changes
-   handleSearch(event); 
+  handleSearch(event); 
 }, [search]); 
 
 const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
