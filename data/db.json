@@ -1,15 +1,21 @@
 {
   "users": [
     {
-      "id": 690,
+      "id": "690",
       "name": "khomotso",
       "email": "rakgoropothabang@gmail.com",
       "password": "12345"
     },
     {
-      "id": 169,
+      "id": "169",
       "name": "khomotso",
       "email": "khomo@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": 781,
+      "name": "thabanag",
+      "email": "rakgoropothabang@gmail.com",
       "password": "12345"
     }
   ],
@@ -22,6 +28,24 @@
       "date": "2025-08-04",
       "jobStatus": "Pending",
       "extraDetails": "Software update"
+    },
+    {
+      "id": "0100",
+      "email": "rakgoropothabang@gmail.com",
+      "companyName": "ioco4444",
+      "role": "developer",
+      "date": "2025-08-15",
+      "jobStatus": "Pending",
+      "extraDetails": "Working with various tech stack"
+    },
+    {
+      "id": "fdc7",
+      "email": "rakgoropothabang@gmail.com",
+      "companyName": "Plumblink SA | Johannesburg",
+      "role": "Frontend",
+      "date": "2025-08-08",
+      "jobStatus": "Pending",
+      "extraDetails": "works"
     }
   ]
 }

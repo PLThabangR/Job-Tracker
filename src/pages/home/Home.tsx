@@ -8,15 +8,15 @@ import { useUsers } from '../../globalState/usersStore';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-interface JobInterface {
-  id: number;
-  email: string;
-  companyName: string;
-  role: string;
-  date: string;
-  jobStatus: string;
-  extraDetails: string;
-}
+// interface JobInterface {
+//   id: number;
+//   email: string;
+//   companyName: string;
+//   role: string;
+//   date: string;
+//   jobStatus: string;
+//   extraDetails: string;
+// }
 
 interface User {
   id: number;

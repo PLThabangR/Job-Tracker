@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { useJobs } from "../../globalState/store";
-import Home from "../home/Home";
-import toast from "react-hot-toast";
 
 
-interface JobInterface {
-  id: number;
-  companyName: string;
-  role: string;
-  date: string;
-  jobStatus: string;
-  extraDetails: string;
-}
+
+// interface JobInterface {
+//   id: number;
+//   companyName: string;
+//   role: string;
+//   date: string;
+//   jobStatus: string;
+//   extraDetails: string;
+// }
 const Search = () => {
-  const {searchByCompanyName,searhArray} = useJobs();
+  const {searchByCompanyName} = useJobs();
 //const [jobs ,getAllJobs] = useJobs();
   //Hooks
   const [search, setSearch] = useState('');
@@ -24,7 +23,7 @@ useEffect(() => {
   
   //  setSearch(search);
    // let this function run as the seach changes
-  handleSearch(event); 
+//  handleSearch(event); 
 }, [search]); 
 
 const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
