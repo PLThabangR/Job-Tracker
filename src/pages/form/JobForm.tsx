@@ -67,7 +67,6 @@ const JobForm = () => {
     const newJob: Job = { 
       //  id: Number(Math.floor(Math.random() * 1000)),
          email: emailString.trim(),companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
-
       //Add new job object to the zustand function
      // addJob(newJob);
      const {success, message} = await createJob(newJob);
@@ -84,7 +83,7 @@ const JobForm = () => {
     setDate('');
     setJobStatus('');
     setExtraDetails('');
-     // 
+     
   }
   return (
     <>

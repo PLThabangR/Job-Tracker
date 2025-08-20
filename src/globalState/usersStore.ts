@@ -14,6 +14,7 @@ interface User {
  type UsersState = {
   users: User[];
   createUser: (newJob: User) => any ;
+  getAllUsers: (email: string,password: string) => any;
   
 }
 
