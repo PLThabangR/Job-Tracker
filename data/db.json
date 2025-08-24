@@ -17,6 +17,12 @@
       "name": "thabanag",
       "email": "rakgoropothabang@gmail.com",
       "password": "12345"
+    },
+    {
+      "id": 660,
+      "name": "khomotso",
+      "email": "rakgoropothabang@gmail.com",
+      "password": "123456"
     }
   ],
   "jobs": [
