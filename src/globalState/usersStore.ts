@@ -21,10 +21,10 @@ interface User {
 
 
 //We are defining our custom hook using th create method
-export const useUsers = create<UsersState>((set) => ({//set is a special name allows us to change our value
+export const useUsers = create<UsersState>((set,get) => ({//set is a special name allows us to change our value
     users: [], //initial value
     //function to update out state
- 
+  
    setUsers: (users: User[]) => set({users}),
 
   createUser:async (newUser: User): Promise<{success: boolean, message: string}> => {
@@ -46,6 +46,23 @@ export const useUsers = create<UsersState>((set) => ({//set is a special name al
 
     if( newUser.password.length<4){
       return {success: false, message: 'Password is too short'};
+    }
+    //Get state variable to check if user exist
+     const {users} = get();
+
+
+
+
+          //check if email and password are correct using the find method to search 
+    const user =users.find((user: User) => user.email === newUser.email)
+
+    //if user exist return this to user
+    if(user){
+       return {success: false, message:"The user already exist"}
+    }
+    
+    if (!user) {
+      return {success: false, message: 'Invalid email or password'};
     }
     //Make a post request to the backend to create new job
      const response = await fetch('http://localhost:8000/users', {
