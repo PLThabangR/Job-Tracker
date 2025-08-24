@@ -3,7 +3,7 @@
 import {create} from 'zustand'
 
 interface Job {
-  id?: number;
+  
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -98,7 +98,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
         'Content-Type': 'application/json',
       },
     });
-     console.log("response  ",response.status)
+   
     if(!response.ok){
       throw new Error("Failed to delete job");
     }
