@@ -7,11 +7,11 @@
 
 ---
 ## step 1
-Clone this project using git clone 
+- Clone this project using git clone 
 - git clone <repository_url>
 - cd job-tracker
 
-  # Step 2 
+## Step 2 
 - npm install  
 ## Step 3 
 - To run app
