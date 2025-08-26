@@ -2,7 +2,7 @@
 
 ![Dashboard Screenshot](https://github.com/PLThabangR/Job-Tracker/blob/main/public/jobtrackerUI.png)
 
-)
+
 # A simple job tracking application built with **React** and **TypeScript**, powered by a mock backend using **JSON Server**.
 
 ---
@@ -54,4 +54,4 @@ Add Job Form
 
 🤝 Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
-
+![Dashboard Screenshot](https://github.com/PLThabangR/Job-Tracker/blob/main/public/jobtracker.png)
