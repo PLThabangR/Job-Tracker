@@ -1,6 +1,6 @@
 # 📌 Job Tracker Application (React + TypeScript)
 
-![Dashboard Screenshot](<img width="645" height="287" alt="jobtracker" src="https://github.com/user-attachments/assets/eb834426-15cb-40ea-a292-de555d453bab" />)
+![Dashboard Screenshot](https://github.com/PLThabangR/Job-Tracker/blob/main/public/jobtrackerUI.png)
 
 )
 # A simple job tracking application built with **React** and **TypeScript**, powered by a mock backend using **JSON Server**.
