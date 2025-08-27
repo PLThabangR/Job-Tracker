@@ -38,9 +38,9 @@ Built with React + TypeScript for scalability
 - React (Frontend)
 
 - TypeScript (Type safety)
-
+- BootStrap (UI Design)
+- Zustand (State management)
 - JSON Server (Mock API)
-
 - Vite (Fast development environment)
 
 📸 Screenshots
