@@ -11,7 +11,7 @@ import { ref, push, get as firebaseGet, child
 import {app}  from "../firebase/firebase";
 
 interface Job {
-  id?: string;
+  id: string;
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -53,11 +53,20 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
  //push data to firebase
     const usersRef = ref(db, 'jobs');
     // push new user to users db
-    const data = await push(usersRef, newJob)
+    const data = await push(usersRef, {
+    
+      email: newJob.email,
+      companyName: newJob.companyName,
+      role: newJob.role,
+      date: newJob.date,
+      jobStatus: newJob.jobStatus,
+      extraDetails: newJob.extraDetails
+    });
     
   if(data){
       //Update the state
     // Key return a object
+    console.log(data.key)
   set((state) => ({ jobs: [...state.jobs, {id: data.key, ...newJob}] }))
 
     
@@ -79,18 +88,33 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
       const response =  ref(db, 'jobs');
         //get users from db and store in the snapshot
       const snapshot = await firebaseGet(response);
+       //Check if user exists
+        if (!snapshot.exists()) {
+          return {success: false, message: 'No jobs found'};
+        }
+
+
       //Parse the response to javascript json object
        const data = await snapshot.val()
-        
-          //convert object to array
+        //Check if data exists then run the code
+       if(data){
+//convert object to array
           const usersArray = Object.values(data);
-   
+          console.log(usersArray);
 
-       //get jobs for the user with the same email
+          //get jobs for the user with the same email
        const Userjobs = usersArray.filter((job: Job) => job.email === userEmail);
       //we do not use set ... because we are not updating the state
     set({jobs: Userjobs as Job[]});
        return {success: true, message: 'Jobs fetched successfully'};
+
+       }else{
+
+        return {success: false, message: 'No jobs found'};
+       }
+
+          
+       
    
   },
   //end of getAllJobs
