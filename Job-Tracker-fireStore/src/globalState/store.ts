@@ -1,9 +1,15 @@
 
 //Importing the create function from zutand
 import {create} from 'zustand'
+//Importing the create function from zutand
+// Import Firebase functions to interact with the database
+import { ref, push, get as firebaseGet, child
+  , getDatabase,set as firebaseSet 
+} from "firebase/database";
+//import initialized db instance
+import {app}  from "../firebase/firebase";
 
 interface Job {
-  
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -39,23 +45,23 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
     if(!newJob.email || !newJob.companyName || !newJob.role || !newJob.date || !newJob.jobStatus || !newJob.extraDetails){
         return {success: false, message: 'All fields are required'};
     }
-    //Make a post request to the backend to create new job
-     const response = await fetch('http://localhost:8000/jobs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      //Convert javascript object into json string
-      body: JSON.stringify(newJob),
-    });
-    //JSON string is parsed back into a JavaScript object 
-    const data = await response.json();
+    
+    // get instance of database
+    const db = getDatabase(app);
+ //push data to firebase
+    const usersRef = ref(db, 'jobs');
+    // push new user to users db
+    const data = await push(usersRef, newJob)
+    
+  if(data){
+      //Update the state
+    // Key return a object
+  set((state) => ({ jobs: [...state.jobs, {id: data.key, ...newJob}] }))
 
-    //Update the state
-    //state mean previous state .job then update with data.jobs
-    set((state) => ({ jobs: [...state.jobs, data.jobs] }))
+    
     //Return the data
     return {success: true, message: "Job created successful"};
+  }
 
    }catch(err){
     //Return this to user if somethi
@@ -65,20 +71,23 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 
   //get all jobs function
   ,getAllJobs: async (userEmail: string): Promise<{success: boolean, message: string}> => {
-     const response = await fetch('http://localhost:8000/jobs',{
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },});
-      //Parse the response to json 
-       const data = await response.json();
-
+         //get instance of database
+      const db = getDatabase(app);
+          //get users for firestore
+      const response =  ref(db, 'jobs');
+        //get users from db and store in the snapshot
+      const snapshot = await firebaseGet(response);
+      //Parse the response to javascript json object
+       const data = await snapshot.val()
+        
+          //convert object to array
+          const usersArray = Object.values(data);
    
 
        //get jobs for the user with the same email
-       const Userjobs = data.filter((job: Job) => job.email === userEmail);
+       const Userjobs = usersArray.filter((job: Job) => job.email === userEmail);
       //we do not use set ... because we are not updating the state
-    set({jobs: Userjobs});
+    set({jobs: Userjobs as Job[]});
        return {success: true, message: 'Jobs fetched successfully'};
    
   },
