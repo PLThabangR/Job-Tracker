@@ -94,7 +94,7 @@ export const useUsers = create<UsersState>((set,get) => ({//set is a special nam
 
   //get all jobs function
   getAllUsers : async (email: string,password: string) => {
-
+      console.log(email,password)
   
     try {
       //get instance of database
@@ -103,42 +103,41 @@ export const useUsers = create<UsersState>((set,get) => ({//set is a special nam
       const response =  ref(db, 'users');
         //get users from db and store in the snapshot
       const snapshot = await firebaseGet(response);
-
+      
       //Check if user exists
       if (!snapshot.exists()) {
         return {success: false, message: 'No users found'};
       }
 
-      //Parse the response to javascript json 
+      //Parse the response to javascript json object
        const data = await snapshot.val()
 
-       //convert object to array
-        if(data){
-          const usersArray = Object.values(data);
-        //we do not use set ... because we are not updating the state
-          set({users: usersArray as User[]});
-        }
-
-
-      
+     
 
        
-    
-   
+          //convert object to array
+          const usersArray = Object.values(data);
+          
+        //we do not use set ... because we are not updating the state
+          set({users: usersArray as User[]});
+        
+
+      
     //check if email and password are correct
         //check if email and password are correct using the find method to search 
-    const user =data.find((user: User) => user.email === email && user.password === password);
-    
+    const user =usersArray.find((user: User) => user.email === email && user.password === password);
+      
+    console.log(user)
     if (!user) {
       return {success: false, message: 'Invalid email or password'};
     }
 
  
     //Return the data 
-    return {success: true, message: 'Login successful'};
+    return {success: true, message: 'Login successfully'};
       
     } catch (error) {
-          return {success: true, message: 'failed to login'};
+          return {success: false, message: 'Failed to login'};
     }
 
   }

@@ -39,6 +39,7 @@ const {success, message} = await getAllUsers(user.email.trim(),user.password.tri
 //the await will wait for the getAllUsers function to resolve all its opration before feedback
 //is given to success and message
 if(success){
+  console.log(users);
   toast.success(message);
      //set token to local storage
     localStorage.setItem('token', 'true');
