@@ -4,12 +4,14 @@ import {create} from 'zustand'
 //Importing the create function from zutand
 // Import Firebase functions to interact with the database
 import { ref, push, get as firebaseGet, child
-  , getDatabase,set as firebaseSet 
+  , getDatabase,set as firebaseSet, 
+  update
 } from "firebase/database";
 //import initialized db instance
 import {app}  from "../firebase/firebase";
 
 interface Job {
+  id?: string;
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -23,8 +25,8 @@ interface Job {
   searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
-  updateJobStore: (jobId: number,updatedJob: Job) => any;
-  deleteJob: (jobId: number) => any;
+  updateJobStore: (jobId: string,updatedJob: Job) => any;
+  deleteJob: (jobId: string) => any;
   searchByCompanyName: (searchTerm: string) => any;
   
 }
@@ -94,24 +96,23 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   //end of getAllJobs
   //Start of Delete job function
 
-  deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
+  deleteJob: async (id: string): Promise<{success: boolean, message: string}> => {
    try{
     //Check if id is null or undefined
      if(!id){
        throw new Error("Id is null or undefined");
      }
      //Make a delete request to the backend to delete job
-     const response = await fetch(`http://localhost:8000/jobs/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-   
-    if(!response.ok){
-      throw new Error("Failed to delete job");
-    }
-
+     //get instance of database
+     const db = getDatabase(app);
+    // remover job from db
+     const job = ref(db, `jobs/${id}`);
+    
+     const snapshot = await firebaseGet(job);
+     if(!snapshot.exists()){
+       throw new Error("Job not found");
+     }
+     
    
     //Update the state
     const jobs = get().jobs;
@@ -130,8 +131,8 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   }//End of deleteJob function
 
   //update job start here
-  ,updateJobStore: async (id: number,updatedJob: Job): Promise<{success: boolean, message: string}> => {
-      console.log("To be updated",typeof(id))
+  ,updateJobStore: async (id: string,updatedJob: Job): Promise<{success: boolean, message: string}> => {
+    
     
     if(!updatedJob.companyName || !updatedJob.role || !updatedJob.date || !updatedJob.jobStatus || !updatedJob.extraDetails){
         return {success: false, message: 'All fields are required'};
@@ -147,25 +148,17 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
     }
    try{
      //Make a put request to the backend to update job
-     const response = await fetch(`http://localhost:8000/jobs/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      //Send the updated job object as a javascropt object string
-      body: JSON.stringify({
-        id: id,
-        companyName: updatedJob.companyName,
-        role: updatedJob.role,
-        date: updatedJob.date,
-        jobStatus: updatedJob.jobStatus,
-        extraDetails: updatedJob.extraDetails
-      }),
-    });
-    //if the response is not ok throw error
-    if(!response.ok){
-      throw new Error("Failed to update job");
-    }
+     //get instance of database
+     const db = getDatabase(app);
+
+     //update job in db
+     const job = ref(db, `jobs/${id}`);
+     await update(job, updatedJob);
+
+   
+
+
+
     //Update the state
     //Use map to update the job with the same id and set the state
     set((state) => ({ jobs: state.jobs.map((job) => job.id === id ? updatedJob : job) }));
