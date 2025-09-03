@@ -5,7 +5,7 @@ import './JobCard.css';
 import {  useState } from 'react';
 
 interface JobCardProps {
-  id: number;
+   id?: number | string  
   email: string;
   companyName: string;
   role: string;
@@ -14,17 +14,16 @@ interface JobCardProps {
   extraDetails: string;
 }
 
-const JobCard = (
-  job: JobCardProps) => {
+const JobCard = (job: JobCardProps) => {
   const [jobDetails, setJobDetails] = useState<JobCardProps>(job);
   // Destructure the props
   const { id, email, companyName, role, date, jobStatus, extraDetails } = jobDetails;
   const { deleteJob ,updateJobStore} = useJobs();
 //control the modal 
 const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleDelete = async (id: number) => {
-  
+ console.log("destructed values",id,email,companyName,role,date,jobStatus,extraDetails);
+  const handleDelete = async (id: number|string) => {
+  console.log("Delete job id ",id);
     if (!id) {
       toast.error('ID is null or undefined');
       return;

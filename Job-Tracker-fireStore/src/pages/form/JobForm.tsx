@@ -8,7 +8,7 @@ import {Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 
 interface Job {
-  id: number;
+  id?: number;
   email: string;
   companyName: string;
   role: string;
@@ -65,7 +65,7 @@ const JobForm = () => {
     
     //Create new job object by using keys and removing white spaces
     const newJob: Job = { 
-      //  id: Number(Math.floor(Math.random() * 1000)),
+        
          email: emailString.trim(),companyName:companyName.trim(),role: role.trim(), date, jobStatus: jobStatus.trim(), extraDetails: extraDetails.trim() };
       //Add new job object to the zustand function
      // addJob(newJob);

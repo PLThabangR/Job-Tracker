@@ -12,7 +12,7 @@ import { ref, push, get as firebaseGet, child
 import {app}  from "../firebase/firebase";
 
 interface Job {
-  id: number;
+  id?: string | number;   
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -27,8 +27,8 @@ interface Job {
   searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
-  updateJobStore: (jobId: number,updatedJob: Job) => any;
-  deleteJob: (jobId: number) => any;
+  updateJobStore: (jobId: string | number,updatedJob: Job) => any;
+  deleteJob: (jobId: string|number) => any;
   searchByCompanyName: (searchTerm: string) => any;
   
 }
@@ -57,15 +57,20 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
  
     // push new user to users table
     const data = await push(jobRef, {id: jobRef.key, ...newJob});
-// Extract the ID
-const jobId = data.key;
-  // Save job with the generated ID
-await firebaseSet(data, { jobId, ...newJob });
     
+    // GExtract key
+    const id = data.key;
+   
+
+  // Save job with the generated ID
+await firebaseSet(data, { id, ...newJob });
+    //save job with key to the state
+     const jobWithId = { id: id, ...newJob };
   if(data){
+   
       //Update the state
     // Key return a objec
-  set((state) => ({ jobs: [...state.jobs, {id: data.key, ...newJob}] }))
+  set((state) => ({ jobs: [...state.jobs, jobWithId] }))
 
     
     //Return the data
@@ -98,7 +103,7 @@ await firebaseSet(data, { jobId, ...newJob });
        if(data){
 //convert object to array
           const usersArray = Object.values(data);
-          console.log(usersArray);
+          console.log("All  jobs",usersArray);
 
           //get jobs for the user with the same email
        const Userjobs = usersArray.filter((job: Job) => job.email === userEmail);
@@ -118,7 +123,7 @@ await firebaseSet(data, { jobId, ...newJob });
   //end of getAllJobs
   //Start of Delete job function
 
-  deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
+  deleteJob: async (id:string|number): Promise<{success: boolean, message: string}> => {
     console.log("Delete job id ",id);
    try{
     //Check if id is null or undefined
@@ -181,10 +186,6 @@ await firebaseSet(data, { jobId, ...newJob });
      //update job in db
      const job = ref(db, `jobs/${id}`);
      await update(job, updatedJob);
-
-   
-
-
 
     //Update the state
     //Use map to update the job with the same id and set the state
