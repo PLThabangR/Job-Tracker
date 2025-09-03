@@ -23,7 +23,7 @@ const JobCard = (job: JobCardProps) => {
 const [isModalOpen, setIsModalOpen] = useState(false);
  console.log("destructed values",id,email,companyName,role,date,jobStatus,extraDetails);
   const handleDelete = async (id: number|string) => {
-  console.log("Delete job id ",id);
+
     if (!id) {
       toast.error('ID is null or undefined');
       return;
@@ -43,6 +43,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
    };
 
    const handleUpdate =async (id: number,updatedJob:JobCardProps) => {
+      
+      console.log("Update job id ",id);
       const {success, message} =  await updateJobStore(id,updatedJob);
       if(success){
         toast.success(message);
