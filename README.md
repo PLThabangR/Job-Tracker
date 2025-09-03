@@ -6,7 +6,8 @@
 # A simple job tracking application built with **React** and **TypeScript**, powered by a mock backend using **JSON Server**.
 
 
-[Live demo](https://https://velvety-lollipop-4b438a.netlify.app/)
+live demo
+https://velvety-lollipop-4b438a.netlify.app/
 ---
 ## step 1
 - Clone this project using git clone 
