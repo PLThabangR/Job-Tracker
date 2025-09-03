@@ -12,7 +12,7 @@ import { ref, push, get as firebaseGet, child
 import {app}  from "../firebase/firebase";
 
 interface Job {
-  id: string;
+  id: number;
   email: string;//email is a property of User as a primary key
   companyName: string;
   role: string;
@@ -27,8 +27,8 @@ interface Job {
   searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
-  updateJobStore: (jobId: string,updatedJob: Job) => any;
-  deleteJob: (jobId: string) => any;
+  updateJobStore: (jobId: number,updatedJob: Job) => any;
+  deleteJob: (jobId: number) => any;
   searchByCompanyName: (searchTerm: string) => any;
   
 }
@@ -54,12 +54,13 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
     const db = getDatabase(app);
  //push data to firebase
     const jobRef = ref(db, 'jobs');
-   console.log("jobRef",jobRef.key)
-    
-    // push new user to users db
+ 
+    // push new user to users table
     const data = await push(jobRef, {id: jobRef.key, ...newJob});
-
-  
+// Extract the ID
+const jobId = data.key;
+  // Save job with the generated ID
+await firebaseSet(data, { jobId, ...newJob });
     
   if(data){
       //Update the state
@@ -117,7 +118,8 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   //end of getAllJobs
   //Start of Delete job function
 
-  deleteJob: async (id: string): Promise<{success: boolean, message: string}> => {
+  deleteJob: async (id: number): Promise<{success: boolean, message: string}> => {
+    console.log("Delete job id ",id);
    try{
     //Check if id is null or undefined
      if(!id){
@@ -139,6 +141,8 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
    
     //Update the state
     const jobs = get().jobs;
+
+    console.log(jobs);
     if(!jobs){
       throw new Error("Jobs is null or undefined");
     }
@@ -154,7 +158,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
   }//End of deleteJob function
 
   //update job start here
-  ,updateJobStore: async (id: string,updatedJob: Job): Promise<{success: boolean, message: string}> => {
+  ,updateJobStore: async (id: number,updatedJob: Job): Promise<{success: boolean, message: string}> => {
     
     
     if(!updatedJob.companyName || !updatedJob.role || !updatedJob.date || !updatedJob.jobStatus || !updatedJob.extraDetails){

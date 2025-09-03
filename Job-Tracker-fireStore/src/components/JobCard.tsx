@@ -95,7 +95,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
            <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
-        <h1>{id}</h1>
+        <h1>ID value :{id}</h1>
         <h5 className="modal-title" style={{textAlign:'center'}}>Update job informaton</h5>
         <button type="button" className="btn-close" onClick={() => setIsModalOpen(false)}></button>
       </div>
