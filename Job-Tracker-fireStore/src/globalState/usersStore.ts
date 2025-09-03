@@ -95,7 +95,7 @@ export const useUsers = create<UsersState>((set,get) => ({//set is a special nam
 
   //get all jobs function
   getAllUsers : async (email: string,password: string) => {
-      console.log(email,password)
+     
   
     try {
       //get instance of database
@@ -128,7 +128,7 @@ export const useUsers = create<UsersState>((set,get) => ({//set is a special nam
         //check if email and password are correct using the find method to search 
     const user =usersArray.find((user: User) => user.email === email && user.password === password);
       
-    console.log(user)
+  
     if (!user) {
       return {success: false, message: 'Invalid email or password'};
     }

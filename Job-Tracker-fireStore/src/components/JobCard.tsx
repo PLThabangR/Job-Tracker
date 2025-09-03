@@ -21,7 +21,7 @@ const JobCard = (job: JobCardProps) => {
   const { deleteJob ,updateJobStore} = useJobs();
 //control the modal 
 const [isModalOpen, setIsModalOpen] = useState(false);
- console.log("destructed values",id,email,companyName,role,date,jobStatus,extraDetails);
+
   const handleDelete = async (id: number|string) => {
 
     if (!id) {
@@ -44,7 +44,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
    const handleUpdate =async (id: number,updatedJob:JobCardProps) => {
       
-      console.log("Update job id ",id);
+      
       const {success, message} =  await updateJobStore(id,updatedJob);
       if(success){
         toast.success(message);
@@ -96,7 +96,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
            <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
-        <h1>ID value :{id}</h1>
+        
         <h5 className="modal-title" style={{textAlign:'center'}}>Update job informaton</h5>
         <button type="button" className="btn-close" onClick={() => setIsModalOpen(false)}></button>
       </div>

@@ -103,7 +103,7 @@ await firebaseSet(data, { id, ...newJob });
        if(data){
 //convert object to array
           const usersArray = Object.values(data);
-          console.log("All  jobs",usersArray);
+         
 
           //get jobs for the user with the same email
        const Userjobs = usersArray.filter((job: Job) => job.email === userEmail);
