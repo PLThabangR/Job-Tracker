@@ -17,7 +17,7 @@ import {create} from 'zustand'
 */
 
 interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
@@ -75,11 +75,12 @@ export const useUsers = create<UsersState>((set,get) => ({//set is a special nam
     
    // get instance of database
     const db = getDatabase(app);
- //push data to firebase
+ //create table with users name
     const usersRef = ref(db, 'users');
-    // push new user to users db
+    // push new user to users table
     const data = await push(usersRef, newUser)
-    
+    console.log("data ...",data)
+   
     //Update the state
   set((state) => ({ users: [...state.users, {id: data.key, ...newUser}] }))
     //Return the data

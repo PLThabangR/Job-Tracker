@@ -5,7 +5,8 @@ import {create} from 'zustand'
 // Import Firebase functions to interact with the database
 import { ref, push, get as firebaseGet, child
   , getDatabase,set as firebaseSet, 
-  update
+  update,
+  remove
 } from "firebase/database";
 //import initialized db instance
 import {app}  from "../firebase/firebase";
@@ -17,11 +18,12 @@ interface Job {
   role: string;
   date: string;
   jobStatus: string;
-  extraDetails?: string;
+  extraDetails: string;
 }
 //defining the type of our job state
  type JobState = {
-  jobs: Job[];
+  jobs: Job[];//array of jobs
+  setJobs: (jobs: Job[]) => void; //function to update our state
   searhArray: Job[];
   createJob: (newJob: Job) => any ;
   getAllJobs: (userEmail: string) => any;
@@ -51,22 +53,17 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
     // get instance of database
     const db = getDatabase(app);
  //push data to firebase
-    const usersRef = ref(db, 'jobs');
-    // push new user to users db
-    const data = await push(usersRef, {
+    const jobRef = ref(db, 'jobs');
+   console.log("jobRef",jobRef.key)
     
-      email: newJob.email,
-      companyName: newJob.companyName,
-      role: newJob.role,
-      date: newJob.date,
-      jobStatus: newJob.jobStatus,
-      extraDetails: newJob.extraDetails
-    });
+    // push new user to users db
+    const data = await push(jobRef, {id: jobRef.key, ...newJob});
+
+  
     
   if(data){
       //Update the state
-    // Key return a object
-    console.log(data.key)
+    // Key return a objec
   set((state) => ({ jobs: [...state.jobs, {id: data.key, ...newJob}] }))
 
     
@@ -130,13 +127,15 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
      //get instance of database
      const db = getDatabase(app);
     // remover job from db
-     const job = ref(db, `jobs/${id}`);
-    
-     const snapshot = await firebaseGet(job);
-     if(!snapshot.exists()){
-       throw new Error("Job not found");
-     }
-     
+     const jobref = ref(db, `jobs/${id}`);
+
+        try{
+     // remover job from db
+     await remove(jobref);
+   }catch(err){
+    throw new Error("Failed to delete job");
+   }
+
    
     //Update the state
     const jobs = get().jobs;
@@ -185,7 +184,7 @@ export const useJobs = create<JobState>((set,get) => ({//set is a special name a
 
     //Update the state
     //Use map to update the job with the same id and set the state
-    set((state) => ({ jobs: state.jobs.map((job) => job.id === id ? updatedJob : job) }));
+    set((state) => ({ jobs: state.jobs.map((job) => job.id === id ? {...job, ...updatedJob} : job) }));
     //Return the data
     return {success: true, message: "Job updated successful"};
    }catch(err){
